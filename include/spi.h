@@ -18,6 +18,8 @@
 
 #ifdef __12F1840
   #include "spi_12f1840.h"
+#elif defined __16F1829
+  #include "spi_16f1829.h"
 #elif defined __16F690
   #include "spi_12f690.h"
 #endif
