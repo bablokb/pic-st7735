@@ -26,7 +26,7 @@ EXTRA_C=test_funcs.c spi.c ST7735_TFT.c
 EXTRA_ASM=delay.asm
 ARCH=pic14
 
-SDCC_ARGS=-DPIN_SPI_CS=$(PIN_SPI_CS) \
+SDCC_ARGS+= -DPIN_SPI_CS=$(PIN_SPI_CS) \
           -DPORT_SPI_CS=$(PORT_SPI_CS) \
           -DPIN_TFT_DC=$(PIN_TFT_DC) \
           -DPORT_TFT_DC=$(PORT_TFT_DC) \
