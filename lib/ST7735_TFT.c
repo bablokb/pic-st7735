@@ -61,35 +61,39 @@
 #undef __delay_ms
 #endif
 #define __delay_ms(x)              delay_ms(x)
+
 #define spiwrite(data)             spi_write(data)
 #define SPI1_Initialize()          spi_init(SPI_SMP_EOD | SPI_CKE_I2A, \
                                      SPI_SSPM_HOST_FOSC_4 | SPI_CKP_HIGH, \
                                      0x0)
-#define DC_RA1_SetLow()            GP_TFT_DC = 0
-#define DC_RA1_SetHigh()           GP_TFT_DC = 1
-#define CS_RA0_SetLow()            GP_SPI_CS = 0
-#define CS_RA0_SetHigh()           GP_SPI_CS = 1
-#define CS_RA0_SetDigitalOutput()  bitclear(ANSEL_SPI_CS,PIN_SPI_CS)
-#define DC_RA1_SetDigitalOutput()  bitclear(ANSEL_TFT_DC,PIN_TFT_DC)
-#define RST_RA5_SetDigitalOutput() bitclear(ANSEL_TFT_RST,PIN_TFT_RST)
-#define RST_RA5_SetLow()           GP_TFT_RST = 0
-#define RST_RA5_SetHigh()          GP_TFT_RST = 1
+
+#define spi_cs_low()               GP_SPI_CS = 0
+#define spi_cs_high()              GP_SPI_CS = 1
+#define spi_cs_output()            bitclear(ANSEL_SPI_CS,PIN_SPI_CS)
+
+#define tft_dc_low()               GP_TFT_DC = 0
+#define tft_dc_high()              GP_TFT_DC = 1
+#define tft_dc_output()            bitclear(ANSEL_TFT_DC,PIN_TFT_DC)
+
+#define tft_rst_low()              GP_TFT_RST = 0
+#define tft_rst_high()             GP_TFT_RST = 1
+#define tft_rst_output()           bitclear(ANSEL_TFT_RST,PIN_TFT_RST)
 // ----------------------------------------------------------------
 
 // Write an SPI command
 void write_command(uint8_t cmd_){
-  DC_RA1_SetLow() ;
-  CS_RA0_SetLow();
+  tft_dc_low() ;
+  spi_cs_low();
   spiwrite(cmd_);
-  CS_RA0_SetHigh();
+  spi_cs_high();
 }
 
 // Write SPI data
 void write_data(uint8_t data_){
-  DC_RA1_SetHigh();
-  CS_RA0_SetLow();
+  tft_dc_high();
+  spi_cs_low();
   spiwrite(data_);
-  CS_RA0_SetHigh();
+  spi_cs_high();
 }
 
 
@@ -273,15 +277,15 @@ void fillRectangle(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color){
     h = _height - y;
   setAddrWindow(x, y, x+w-1, y+h-1);
   hi = color >> 8; lo = color;
-  DC_RA1_SetHigh();
-  CS_RA0_SetLow();
+  tft_dc_high();
+  spi_cs_low();
   for(y=h; y>0; y--) {
     for(x = w; x > 0; x--) {
       spiwrite(hi);
       spiwrite(lo);
     }
   }
-  CS_RA0_SetHigh() ;
+  spi_cs_high() ;
 }
 
 
@@ -298,13 +302,13 @@ void drawFastVLine(uint8_t x, uint8_t y, uint8_t h, uint16_t color){
     h = _height - y;
   hi = color >> 8; lo = color;
   setAddrWindow(x, y, x, y + h - 1);
-  DC_RA1_SetHigh();
-  CS_RA0_SetLow();
+  tft_dc_high();
+  spi_cs_low();
   while (h--) {
     spiwrite(hi);
     spiwrite(lo);
   }
-  CS_RA0_SetHigh() ;
+  spi_cs_high() ;
 }
 
 
@@ -316,13 +320,13 @@ void drawFastHLine(uint8_t x, uint8_t y, uint8_t w, uint16_t color){
     w = _width - x;
   hi = color >> 8; lo = color;
   setAddrWindow(x, y, x + w - 1, y);
-  DC_RA1_SetHigh();
-  CS_RA0_SetLow();
+  tft_dc_high();
+  spi_cs_low();
   while (w--) {
     spiwrite(hi);
     spiwrite(lo);
   }
-  CS_RA0_SetHigh() ;
+  spi_cs_high() ;
 }
 
 
@@ -652,21 +656,21 @@ int16_t Color565(int16_t r, int16_t g, int16_t b){
 void pushColor(uint16_t color){
   uint8_t hi, lo;
   hi = color >> 8; lo = color;
-  DC_RA1_SetHigh();
-  CS_RA0_SetLow();
+  tft_dc_high();
+  spi_cs_low();
   spiwrite(hi);
   spiwrite(lo);
-  CS_RA0_SetHigh() ;
+  spi_cs_high() ;
 }
 
 
 // Init Green PCB version 
 void TFT_GreenTab_Initialize(){
   TFT_ResetPIN();
-  CS_RA0_SetHigh() ;
-  DC_RA1_SetLow() ;
-  CS_RA0_SetDigitalOutput();
-  DC_RA1_SetDigitalOutput();
+  spi_cs_high() ;
+  tft_dc_low() ;
+  spi_cs_output();
+  tft_dc_output();
   SPI1_Initialize();
   Rcmd1();
   Rcmd2green();
@@ -679,22 +683,22 @@ void TFT_GreenTab_Initialize(){
 // Function for Hardware Reset pin 
 void TFT_ResetPIN()
 {
-    RST_RA5_SetDigitalOutput() ;
-    RST_RA5_SetHigh() ;
+    tft_rst_output() ;
+    tft_rst_high() ;
     __delay_ms(10);
-    RST_RA5_SetLow() ;
+    tft_rst_low() ;
     __delay_ms(10);
-    RST_RA5_SetHigh() ;
+    tft_rst_high() ;
     __delay_ms(10);
 }
 
 // Init Red PCB version 
 void TFT_RedTab_Initialize(){
   TFT_ResetPIN();
-  CS_RA0_SetHigh();
-  DC_RA1_SetLow();
-  CS_RA0_SetDigitalOutput();
-  DC_RA1_SetDigitalOutput();
+  spi_cs_high();
+  tft_dc_low();
+  spi_cs_output();
+  tft_dc_output();
   SPI1_Initialize();
   Rcmd1();
   Rcmd2red();
@@ -706,10 +710,10 @@ void TFT_RedTab_Initialize(){
 // Init Black PCB version
 void TFT_BlackTab_Initialize(){
   TFT_ResetPIN();
-  CS_RA0_SetHigh();
-  DC_RA1_SetLow() ;
-  CS_RA0_SetDigitalOutput();
-  DC_RA1_SetDigitalOutput();
+  spi_cs_high();
+  tft_dc_low() ;
+  spi_cs_output();
+  tft_dc_output();
   SPI1_Initialize();
   Rcmd1();
   Rcmd2red();
@@ -722,10 +726,10 @@ void TFT_BlackTab_Initialize(){
 // Generic PCB init function
 void TFT_ST7735B_Initialize(){
   TFT_ResetPIN();
-  CS_RA0_SetHigh();
-  DC_RA1_SetLow() ;
-  CS_RA0_SetDigitalOutput();
-  DC_RA1_SetDigitalOutput();
+  spi_cs_high();
+  tft_dc_low() ;
+  spi_cs_output();
+  tft_dc_output();
   SPI1_Initialize();
   Bcmd();
   _tft_type = 2;
