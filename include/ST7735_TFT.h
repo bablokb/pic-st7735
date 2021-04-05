@@ -133,5 +133,12 @@ void drawChar(uint8_t x, uint8_t y, uint8_t c, uint16_t color, uint16_t bg,  uin
 void setTextWrap(bool w);
 void drawtext(uint8_t x, uint8_t y, char *_text, uint16_t color, uint16_t bg, uint8_t size);
 
+// ------ not functional yet ----------------------------------------------
+// needs fat-library
+
+// BMP processing from SD-card
+#if defined TFT_ENABLE_BMP
+bool bmpDraw(int8_t x, int8_t y, int8_t *bmpname);
+#endif
 
 #endif

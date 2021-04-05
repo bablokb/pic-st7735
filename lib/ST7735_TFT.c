@@ -734,3 +734,109 @@ void TFT_ST7735B_Initialize(){
   Bcmd();
   _tft_type = 2;
 }
+
+
+// ------ not functional yet ----------------------------------------------
+// needs fat-library
+
+#if defined TFT_ENABLE_BMP
+
+#ifndef pixel_buffer
+  #define pixel_buffer  10
+#endif
+
+bool bmpDraw(int8_t x, int8_t y, int8_t *bmpname) {
+  bool ec = 0, padding = 0;
+  int8_t bmpdata[pixel_buffer * 3],
+       planes, depth, r, g, b, col, row;
+  int16 i, buffer = pixel_buffer * 3, format, bmpHeight, bmpWidth, color;
+  int32 offset, compression, bmp_size, row_size, padding_factor;
+  if((x >= _width) || (y >= _height))
+    return false;
+  if(fat16_open_file(bmpname) != 0)
+    return false;
+  ec |= sdcard_read_byte(address_pointer + 1, &format);
+  format <<= 8;
+  ec |= sdcard_read_byte(address_pointer, &format);
+  if(format != 0x4D42)                           // BMP file format signature
+    return false;                                // Return error
+  ec |= sdcard_read_byte(address_pointer + 0x0D, &offset);
+  offset <<= 8;
+  ec |= sdcard_read_byte(address_pointer + 0x0C, &offset);
+  offset <<= 8;
+  ec |= sdcard_read_byte(address_pointer + 0x0B, &offset);
+  offset <<= 8;
+  ec |= sdcard_read_byte(address_pointer + 0x0A, &offset);
+  ec |= sdcard_read_byte(address_pointer + 0x13, &bmpWidth);
+  bmpWidth <<= 8;
+  ec |= sdcard_read_byte(address_pointer + 0x12, &bmpWidth);
+  ec |= sdcard_read_byte(address_pointer + 0x17, &bmpHeight);
+  bmpHeight <<= 8;
+  ec |= sdcard_read_byte(address_pointer + 0x16, &bmpHeight);
+  ec |= sdcard_read_byte(address_pointer + 0x1A, &planes);
+  ec |= sdcard_read_byte(address_pointer + 0x1C, &depth);
+  ec |= sdcard_read_byte(address_pointer + 0x21, &compression);
+  compression <<= 8;
+  ec |= sdcard_read_byte(address_pointer + 0x20, &compression);
+  compression <<= 8;
+  ec |= sdcard_read_byte(address_pointer + 0x1f, &compression);
+  compression <<= 8;
+  ec |= sdcard_read_byte(address_pointer + 0x1e, &compression);
+  if(ec != 0 || compression != 0 || depth != 24 || planes != 1)
+    return false;
+  bmp_size = file_size - offset;            // bmp_size: BMP image raw size
+  row_size = bmp_size / bmpHeight;          // row_size: number of bytes per row
+  if((x + bmpWidth  - 1) >=  _width) {      // _width is the TFT screen width
+    bmpWidth = _width  - x;
+    padding = 1;           //Padding = 1 ==> only upper left part will be displayed
+    padding_factor = bmpWidth / pixel_buffer;
+    if(bmpWidth % pixel_buffer)
+      padding_factor++;
+    padding_factor *= buffer;
+  }
+  if((y + bmpHeight - 1) >= _height) {       // _height is the TFT screen height
+    offset += row_size * (bmpHeight - _height + y);  // Only upper part will be displayed
+    bmpHeight = _height - y;
+  }
+  file_pointer     = offset;
+  address_pointer += offset;
+  i = buffer;
+  if(_tft_type != 2){
+  // Change row address order
+    write_command(ST7735_MADCTL);
+    if(_tft_type == 0)
+      write_data(0x48);
+    if(_tft_type == 1)
+      write_data(0x40);
+  }
+  setAddrWindow(x , y, x + bmpWidth - 1, y + bmpHeight - 1);
+  for(row = 0; row < bmpHeight; row++){
+    for(col = 0; col < bmpWidth; col++){
+      if(i >= buffer){
+        i = 0;
+        fat16_read_data(buffer, bmpdata);
+      }
+      b = bmpdata[i++];
+      g = bmpdata[i++];
+      r = bmpdata[i++];
+      color = Color565(r, g, b);
+      pushColor(color);
+    }
+    if(padding == 1){
+      i = buffer;
+      file_pointer    += row_size - padding_factor;
+      address_pointer += row_size - padding_factor;
+    }
+  }
+  if(_tft_type != 2){
+  // Return row address order as it was
+    write_command(ST7735_MADCTL);
+    if(_tft_type == 0)
+      write_data(0xC8);
+    if(_tft_type == 1)
+      write_data(0xC0);
+  }
+  // Good BMP
+  return true;
+}
+#endif
