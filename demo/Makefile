@@ -22,7 +22,7 @@ PIN_TFT_RST  = 2
 PORT_TFT_RST = A
 
 PROJECT=demo
-EXTRA_C=test_funcs.c spi.c ST7735_TFT.c
+EXTRA_C=tst_funcs.c spi.c ST7735_TFT.c
 EXTRA_ASM=delay.asm
 ARCH=pic14
 
