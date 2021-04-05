@@ -32,7 +32,8 @@ SDCC_ARGS+= -DPIN_SPI_CS=$(PIN_SPI_CS) \
           -DPORT_TFT_DC=$(PORT_TFT_DC) \
           -DPIN_TFT_RST=$(PIN_TFT_RST) \
           -DPORT_TFT_RST=$(PORT_TFT_RST) \
-          -DSPI_HOST -DSPI_NO_SDI
+          -DSPI_HOST -DSPI_NO_SDI \
+          -DTFT_ENABLE_RESET -DTFT_ENABLE_BLACK
 
 include ptc_rules.inc
 MCLR  = ON
