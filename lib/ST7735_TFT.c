@@ -580,7 +580,7 @@ void setTextWrap(bool w){
 }
 
 // Draw text character array to screen
-void drawtext(uint8_t x, uint8_t y, const char *_text, uint16_t color, uint16_t bg, uint8_t size) {
+void drawText(uint8_t x, uint8_t y, const char *_text, uint16_t color, uint16_t bg, uint8_t size) {
   uint8_t cursor_x, cursor_y;
   uint16_t textsize, i;
   cursor_x = x, cursor_y = y;

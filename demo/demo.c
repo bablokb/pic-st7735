@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 
 #include "picconfig.h"
-#include "test_funcs.h"
+#include "tst_funcs.h"
 #include "ST7735_TFT.h"
 
 CONFIG_WORDS;
@@ -58,6 +58,6 @@ void main(void) {
   // Test7(); //TODO Scroll
   Test8();
   fillScreen(ST7735_BLACK);
-  drawtext(10, 10, "Test over!", ST7735_WHITE, ST7735_BLACK, 1);
+  drawText(10, 10, "Test over!", ST7735_WHITE, ST7735_BLACK, 1);
   while(1);
 }

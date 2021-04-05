@@ -14,7 +14,7 @@
 
 #include "picconfig.h"
 #include "delay.h"
-#include "test_funcs.h"
+#include "tst_funcs.h"
 #include "ST7735_TFT.h"
 
 void delay_s(uint8_t count) {
@@ -25,36 +25,36 @@ void delay_s(uint8_t count) {
 
 void Test1(void) {
   const char *txt = " hello world";    
-  drawtext(0, 5, txt, ST7735_WHITE, ST7735_BLACK, 1);
-  drawtext(0, 15, txt,  ST7735_BLUE, ST7735_BLACK, 1);
-  drawtext(0, 25, txt, ST7735_RED, ST7735_BLACK, 1);
-  drawtext(0, 35, txt, ST7735_GREEN, ST7735_BLACK, 1);       
-  drawtext(0, 45, txt, ST7735_CYAN, ST7735_BLACK, 1);       
-  drawtext(0, 55, txt, ST7735_MAGENTA, ST7735_BLACK, 1);       
-  drawtext(0, 65, txt, ST7735_YELLOW, ST7735_BLACK, 1);        
-  drawtext(0, 75, txt, ST7735_WHITE, ST7735_BLACK, 1);       
+  drawText(0, 5, txt, ST7735_WHITE, ST7735_BLACK, 1);
+  drawText(0, 15, txt,  ST7735_BLUE, ST7735_BLACK, 1);
+  drawText(0, 25, txt, ST7735_RED, ST7735_BLACK, 1);
+  drawText(0, 35, txt, ST7735_GREEN, ST7735_BLACK, 1);       
+  drawText(0, 45, txt, ST7735_CYAN, ST7735_BLACK, 1);       
+  drawText(0, 55, txt, ST7735_MAGENTA, ST7735_BLACK, 1);       
+  drawText(0, 65, txt, ST7735_YELLOW, ST7735_BLACK, 1);        
+  drawText(0, 75, txt, ST7735_WHITE, ST7735_BLACK, 1);       
   TEST_DELAY2();
   fillScreen(ST7735_BLACK);
 }
 
 void Test1A(void) {   
-  drawtext(0, 5, " !#$%&'()*+,-.", ST7735_WHITE, ST7735_BLACK, 1);
-  drawtext(0, 15, "0123456789",  ST7735_BLUE, ST7735_BLACK, 1);
-  drawtext(0, 25, "abcdefghijklmn", ST7735_RED, ST7735_BLACK, 1);
-  drawtext(0, 35, "ABCDEGHIJKLMN", ST7735_GREEN, ST7735_BLACK, 1);       
-  drawtext(0, 45, "opqrstuvwxyz", ST7735_CYAN, ST7735_BLACK, 1);       
-  drawtext(0, 55, "OPQRSTUVWYXZ", ST7735_MAGENTA, ST7735_BLACK, 1);       
-  drawtext(0, 65, ";:=,.?@", ST7735_YELLOW, ST7735_BLACK, 1);        
-  drawtext(0, 75, "[]/", ST7735_BLACK, ST7735_WHITE, 1);       
+  drawText(0, 5, " !#$%&'()*+,-.", ST7735_WHITE, ST7735_BLACK, 1);
+  drawText(0, 15, "0123456789",  ST7735_BLUE, ST7735_BLACK, 1);
+  drawText(0, 25, "abcdefghijklmn", ST7735_RED, ST7735_BLACK, 1);
+  drawText(0, 35, "ABCDEGHIJKLMN", ST7735_GREEN, ST7735_BLACK, 1);       
+  drawText(0, 45, "opqrstuvwxyz", ST7735_CYAN, ST7735_BLACK, 1);       
+  drawText(0, 55, "OPQRSTUVWYXZ", ST7735_MAGENTA, ST7735_BLACK, 1);       
+  drawText(0, 65, ";:=,.?@", ST7735_YELLOW, ST7735_BLACK, 1);        
+  drawText(0, 75, "[]/", ST7735_BLACK, ST7735_WHITE, 1);       
   TEST_DELAY5();
   fillScreen(ST7735_BLACK);
 }
 
 void Test2(void) {
   const char *txttwo = "test2";
-  drawtext(0, 5, txttwo, ST7735_WHITE, ST7735_BLACK, 2);
-  drawtext(0, 25, txttwo, ST7735_WHITE, ST7735_BLACK, 3);
-  drawtext(0, 55, txttwo, ST7735_WHITE, ST7735_BLACK, 4);
+  drawText(0, 5, txttwo, ST7735_WHITE, ST7735_BLACK, 2);
+  drawText(0, 25, txttwo, ST7735_WHITE, ST7735_BLACK, 3);
+  drawText(0, 55, txttwo, ST7735_WHITE, ST7735_BLACK, 4);
   drawChar(0, 80, 'c', ST7735_WHITE, ST7735_BLACK,  5);
   TEST_DELAY2();
   fillScreen(ST7735_BLACK);
@@ -93,7 +93,7 @@ void Test6(void) {
 
 void Test7(void) {
   const char *txtthree = "  scroll  ";
-  drawtext(0, 45, txtthree, ST7735_CYAN, ST7735_BLACK, 1); 
+  drawText(0, 45, txtthree, ST7735_CYAN, ST7735_BLACK, 1); 
   setScrollDefinition(100, 10, 0);
   VerticalScroll(0);
   TEST_DELAY2();
