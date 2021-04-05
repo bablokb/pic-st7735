@@ -96,7 +96,7 @@ void write_data(uint8_t data_){
   spi_cs_high();
 }
 
-
+#if defined TFT_ENABLE_GENERIC
 void Bcmd(){
   write_command(ST7735_SWRESET);
   __delay_ms(50);
@@ -155,7 +155,7 @@ void Bcmd(){
   __delay_ms(250);
   __delay_ms(250);
 }
-
+#endif
 
 void Rcmd1(){
   write_command(ST7735_SWRESET);
@@ -200,6 +200,7 @@ void Rcmd1(){
   write_data(0x05); 
 }
 
+#if defined TFT_ENABLE_GREEN
 void Rcmd2green(){
   write_command(ST7735_CASET);
   write_data(0x00); write_data(0x02);
@@ -208,7 +209,9 @@ void Rcmd2green(){
   write_data(0x00); write_data(0x01);
   write_data(0x00); write_data(0x9F + 0x01);
 }
+#endif
 
+#if defined(TFT_ENABLE_RED) || defined(TFT_ENABLE_BLACK)
 void Rcmd2red(){
   write_command(ST7735_CASET);
   write_data(0x00); write_data(0x00);
@@ -217,6 +220,7 @@ void Rcmd2red(){
   write_data(0x00); write_data(0x00);
   write_data(0x00); write_data(0x9F);
 }
+#endif
 
 void Rcmd3(){
   write_command(ST7735_GMCTRP1);
@@ -665,8 +669,11 @@ void pushColor(uint16_t color){
 
 
 // Init Green PCB version 
+#if defined TFT_ENABLE_GREEN
 void TFT_GreenTab_Initialize(){
+#if defined TFT_ENABLE_RESET
   TFT_ResetPIN();
+#endif
   spi_cs_high() ;
   tft_dc_low() ;
   spi_cs_output();
@@ -679,22 +686,27 @@ void TFT_GreenTab_Initialize(){
   rowstart = 1;
   _tft_type = 0;
 }
+#endif
 
 // Function for Hardware Reset pin 
-void TFT_ResetPIN()
-{
-    tft_rst_output() ;
-    tft_rst_high() ;
-    __delay_ms(10);
-    tft_rst_low() ;
-    __delay_ms(10);
-    tft_rst_high() ;
-    __delay_ms(10);
+#if defined TFT_ENABLE_RESET
+void TFT_ResetPIN() {
+  tft_rst_output() ;
+  tft_rst_high() ;
+  __delay_ms(10);
+  tft_rst_low() ;
+  __delay_ms(10);
+  tft_rst_high() ;
+  __delay_ms(10);
 }
+#endif
 
 // Init Red PCB version 
+#if defined TFT_ENABLE_RED
 void TFT_RedTab_Initialize(){
+#if defined TFT_ENABLE_RESET
   TFT_ResetPIN();
+#endif
   spi_cs_high();
   tft_dc_low();
   spi_cs_output();
@@ -704,12 +716,15 @@ void TFT_RedTab_Initialize(){
   Rcmd2red();
   Rcmd3();
   _tft_type = 0;
-  
 }
+#endif
 
 // Init Black PCB version
+#if defined TFT_ENABLE_BLACK
 void TFT_BlackTab_Initialize(){
+#if defined TFT_ENABLE_RESET
   TFT_ResetPIN();
+#endif
   spi_cs_high();
   tft_dc_low() ;
   spi_cs_output();
@@ -722,10 +737,14 @@ void TFT_BlackTab_Initialize(){
   write_data(0xC0);
   _tft_type = 1;
 }
+#endif
 
 // Generic PCB init function
+#if defined TFT_ENABLE_GENERIC
 void TFT_ST7735B_Initialize(){
+#if defined TFT_ENABLE_RESET
   TFT_ResetPIN();
+#endif
   spi_cs_high();
   tft_dc_low() ;
   spi_cs_output();
@@ -734,7 +753,7 @@ void TFT_ST7735B_Initialize(){
   Bcmd();
   _tft_type = 2;
 }
-
+#endif
 
 // ------ not functional yet ----------------------------------------------
 // needs fat-library

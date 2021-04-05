@@ -85,15 +85,33 @@ void write_command(uint8_t );
 void write_data(uint8_t );
 
 // Init
+#if defined TFT_ENABLE_GREEN
 void TFT_GreenTab_Initialize(void);
-void TFT_RedTab_Initialize(void);
-void TFT_BlackTab_Initialize(void);
-void TFT_ST7735B_Initialize(void);
-void TFT_ResetPIN(void);
-void Bcmd();
-void Rcmd1();
 void Rcmd2green();
+#endif
+
+#if defined TFT_ENABLE_RED
+void TFT_RedTab_Initialize(void);
+#endif
+
+#if defined TFT_ENABLE_BLACK
+void TFT_BlackTab_Initialize(void);
+#endif
+
+#if defined(TFT_ENABLE_RED) || defined(TFT_ENABLE_BLACK)
 void Rcmd2red();
+#endif
+
+#if defined TFT_ENABLE_GENERIC
+void TFT_ST7735B_Initialize(void);
+void Bcmd();
+#endif
+
+#if defined TFT_ENABLE_RESET
+void TFT_ResetPIN(void);
+#endif
+
+void Rcmd1();
 void Rcmd3();
 
 // Misc + Screen related
