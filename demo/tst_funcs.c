@@ -23,6 +23,7 @@ void delay_s(uint8_t count) {
   }
 }
 
+#if defined(ENABLE_TEST1)
 void Test1(void) {
   const char *txt = " hello world";    
   drawText(0, 5, txt, ST7735_WHITE, ST7735_BLACK, 1);
@@ -36,7 +37,9 @@ void Test1(void) {
   TEST_DELAY2();
   fillScreen(ST7735_BLACK);
 }
+#endif
 
+#if defined(ENABLE_TEST1A)
 void Test1A(void) {   
   drawText(0, 5, " !#$%&'()*+,-.", ST7735_WHITE, ST7735_BLACK, 1);
   drawText(0, 15, "0123456789",  ST7735_BLUE, ST7735_BLACK, 1);
@@ -49,7 +52,9 @@ void Test1A(void) {
   TEST_DELAY5();
   fillScreen(ST7735_BLACK);
 }
+#endif
 
+#if defined(ENABLE_TEST2)
 void Test2(void) {
   const char *txttwo = "test2";
   drawText(0, 5, txttwo, ST7735_WHITE, ST7735_BLACK, 2);
@@ -59,7 +64,9 @@ void Test2(void) {
   TEST_DELAY2();
   fillScreen(ST7735_BLACK);
 }
+#endif
 
+#if defined(ENABLE_TEST3)
 void Test3(void) { //pixels and lines 
   drawPixel(5, 5, ST7735_RED);
   drawLine(10, 10, 30, 30, ST7735_RED);
@@ -68,7 +75,9 @@ void Test3(void) { //pixels and lines
   TEST_DELAY2();
   fillScreen(ST7735_BLACK);
 }    
+#endif
 
+#if defined(ENABLE_TEST4)
 void Test4(void) {
   drawRectWH(5, 5, 20, 20, ST7735_RED);
   fillRectangle(25 , 25 , 40 , 40 ,  ST7735_YELLOW);
@@ -78,19 +87,25 @@ void Test4(void) {
   TEST_DELAY2();
   fillScreen(ST7735_BLACK);
 }
+#endif
 
+#if defined(ENABLE_TEST5)
 void Test5(void) {
   drawCircle(40, 40, 20,  ST7735_GREEN); 
   fillCircle(80, 20, 15,  ST7735_YELLOW); 
 }
+#endif
 
+#if defined(ENABLE_TEST6)
 void Test6(void) {
   drawTriangle(5, 80, 50, 80, 15, 100, ST7735_CYAN); 
   fillTriangle(55, 80, 100, 60, 75, 120, ST7735_RED); 
   TEST_DELAY2();
   fillScreen(ST7735_BLACK);
 }
+#endif
 
+#if defined(ENABLE_TEST7)
 void Test7(void) {
   const char *txtthree = "  scroll  ";
   drawText(0, 45, txtthree, ST7735_CYAN, ST7735_BLACK, 1); 
@@ -100,7 +115,9 @@ void Test7(void) {
   NormalDisplay(); 
   fillScreen(ST7735_BLACK);
 }
+#endif
 
+#if defined(ENABLE_TEST8)
 void Test8() {
   //Draw play button 
   fillRoundRect(25, 10, 78, 60, 8, ST7735_WHITE);
@@ -120,3 +137,4 @@ void Test8() {
   TEST_DELAY2();
   fillScreen(ST7735_BLACK);
 }
+#endif

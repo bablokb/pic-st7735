@@ -22,13 +22,32 @@
 #define TEST_DELAY5() delay_s(5)
 
 void delay_s(uint8_t count);
+
+#if defined(ENABLE_TEST1)
 void Test1(void); // Hello world fonts + Colors text
+#endif
+#if defined(ENABLE_TEST1A)
 void Test1A(void); // print entire font
+#endif
+#if defined(ENABLE_TEST2)
 void Test2(void); // font sizes + character draw
+#endif
+#if defined(ENABLE_TEST3)
 void Test3(void); // pixels and lines
+#endif
+#if defined(ENABLE_TEST4)
 void Test4(void); // rectangles 
+#endif
+#if defined(ENABLE_TEST5)
 void Test5(void); // Circle
+#endif
+#if defined(ENABLE_TEST6)
 void Test6(void); // Triangles 
+#endif
+#if defined(ENABLE_TEST7)
 void Test7(void); // scroll TODO not working in version 1.0
+#endif
+#if defined(ENABLE_TEST8)
 void Test8(void); // shapes media buttons graphic + invert display
+#endif
 #endif
