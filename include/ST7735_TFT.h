@@ -147,9 +147,11 @@ void drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, in
 void fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color); 
 
 // Text
+#if defined(TFT_ENABLE_TEXT)
 void drawChar(uint8_t x, uint8_t y, uint8_t c, uint16_t color, uint16_t bg,  uint8_t size);
 void setTextWrap(bool w);
 void drawText(uint8_t x, uint8_t y, const char *_text, uint16_t color, uint16_t bg, uint8_t size);
+#endif
 
 // ------ not functional yet ----------------------------------------------
 // needs fat-library

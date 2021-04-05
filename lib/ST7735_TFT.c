@@ -53,7 +53,10 @@
 #include "spi.h"
 #include "delay.h"
 #include "ST7735_TFT.h"
+
+#if defined(TFT_ENABLE_TEXT)
 #include "TextFonts.h"
+#endif
 
 // ----------------------------------------------------------------
 // map functions
@@ -550,6 +553,7 @@ void fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, in
   }
 }
 
+#if defined(TFT_ENABLE_TEXT)
 // Draw a single text character to screen
 void drawChar(uint8_t x, uint8_t y, uint8_t c, uint16_t color, uint16_t bg,  uint8_t size){
   int8_t i, j;
@@ -586,17 +590,23 @@ void drawText(uint8_t x, uint8_t y, const char *_text, uint16_t color, uint16_t 
   cursor_x = x, cursor_y = y;
   textsize = strlen(_text);
   for(i = 0; i < textsize; i++){
-    if(wrap && ((cursor_x + size * 5) > _width)){
+    if(wrap && ((cursor_x + size * 5) > _width)) {
       cursor_x = 0;
       cursor_y = cursor_y + size * 7 + 3 ;
       if(cursor_y > _height) cursor_y = _height;
-      if(_text[i] == LCD_ASCII_OFFSET) goto _skip; }
+      if(_text[i] == LCD_ASCII_OFFSET) {
+        continue;
+      }
+    }
     drawChar(cursor_x, cursor_y, _text[i], color, bg, size);
     cursor_x = cursor_x + size * 6;
-    if(cursor_x > _width) cursor_x = _width;
-    _skip:;
+    if(cursor_x > _width) {
+      cursor_x = _width;
+    }
   }
 }
+#endif
+
 void invertDisplay(bool i) {
   if(i)
     write_command(ST7735_INVON);
