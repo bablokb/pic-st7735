@@ -265,6 +265,7 @@ void setAddrWindow(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1){
   write_command(ST7735_RAMWR); // Write to RAM
 }
 
+#if defined TFT_ENABLE_SHAPES
 void drawPixel(uint8_t x, uint8_t y, uint16_t color){
   if((x >= _width) || (y >= _height)) 
     return;
@@ -272,7 +273,6 @@ void drawPixel(uint8_t x, uint8_t y, uint16_t color){
   write_data(color >> 8);
   write_data(color & 0xFF);
 }
-
 
 void fillRectangle(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color){
   uint8_t hi, lo;
@@ -295,11 +295,9 @@ void fillRectangle(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color){
   spi_cs_high() ;
 }
 
-
 void fillScreen(uint16_t color) {
   fillRectangle(0, 0, _width, _height, color);
 }
-
 
 void drawFastVLine(uint8_t x, uint8_t y, uint8_t h, uint16_t color){
   uint8_t hi, lo;
@@ -318,7 +316,6 @@ void drawFastVLine(uint8_t x, uint8_t y, uint8_t h, uint16_t color){
   spi_cs_high() ;
 }
 
-
 void drawFastHLine(uint8_t x, uint8_t y, uint8_t w, uint16_t color){
   uint8_t hi, lo;
   if((x >= _width) || (y >= _height))
@@ -335,7 +332,6 @@ void drawFastHLine(uint8_t x, uint8_t y, uint8_t w, uint16_t color){
   }
   spi_cs_high() ;
 }
-
 
 void drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
   int16_t f, ddF_x, ddF_y, x, y;
@@ -363,7 +359,6 @@ void drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
     drawPixel(x0 - y, y0 - x, color);
   }
 }
-
 
 void drawCircleHelper(int16_t x0, int16_t y0, int16_t r, uint8_t cornername, uint16_t color) {
   int16_t f, ddF_x, ddF_y, x, y;
@@ -396,7 +391,6 @@ void drawCircleHelper(int16_t x0, int16_t y0, int16_t r, uint8_t cornername, uin
   }
 }
 
-
 void fillCircleHelper(int16_t x0, int16_t y0, int16_t r, uint8_t cornername, int16_t delta, uint16_t color) {
   int16_t f, ddF_x, ddF_y, x, y;
   f = 1 - r, ddF_x = 1, ddF_y = -2 * r, x = 0, y = r;
@@ -421,12 +415,10 @@ void fillCircleHelper(int16_t x0, int16_t y0, int16_t r, uint8_t cornername, int
   }
 }
 
-
 void fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
   drawFastVLine(x0, y0 - r, 2 * r + 1, color);
   fillCircleHelper(x0, y0, r, 3, 0, color);
 }
-
 
 void drawRectWH(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color){
   drawFastHLine(x, y, w, color);
@@ -434,7 +426,6 @@ void drawRectWH(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color){
   drawFastVLine(x, y, h, color);
   drawFastVLine(x + w - 1, y, h, color);
 }
-
 
 void drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color){
   int16_t steep, dx, dy, err, ystep;
@@ -552,6 +543,7 @@ void fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, in
     drawFastHLine(a, y, b-a+1, color);
   }
 }
+#endif
 
 #if defined(TFT_ENABLE_TEXT)
 // Draw a single text character to screen
@@ -614,7 +606,7 @@ void invertDisplay(bool i) {
     write_command(ST7735_INVOFF);
 }
 
-
+#ifdef TFT_ENABLE_SCROLL
 void setScrollDefinition(uint8_t top_fix_height, uint8_t bottom_fix_height, bool _scroll_direction){
   uint8_t scroll_height;
   scroll_height = _height - top_fix_height - bottom_fix_height;
@@ -650,13 +642,12 @@ void setScrollDefinition(uint8_t top_fix_height, uint8_t bottom_fix_height, bool
   }
 }
 
-
 void VerticalScroll(uint8_t _vsp) {
   write_command(ST7735_VSCRSADD);
   write_data(0x00);
   write_data(_vsp);
 }
-
+#endif
 
 void NormalDisplay(){
   write_command(ST7735_NORON);

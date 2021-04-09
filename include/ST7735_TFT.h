@@ -19,6 +19,18 @@
 #include <string.h>
 #include "picconfig.h"
 
+#if defined TFT_ENABLE_ALL
+  #if !defined TFT_ENABLE_SHAPES
+    #define TFT_ENABLE_SHAPES
+  #endif
+  #if !defined TFT_ENABLE_SCROLL
+    #define TFT_ENABLE_SCROLL
+  #endif
+  #if !defined TFT_ENABLE_TEXT
+    #define TFT_ENABLE_TEXT
+  #endif
+#endif
+
 #define _swap(a, b) { int16_t t; t = a; a = b; b = t;}
 #define _width         128
 #define _height        160
@@ -121,10 +133,13 @@ void NormalDisplay(void);
 void pushColor(uint16_t color);
 
 //Scroll 
+#if defined TFT_ENABLE_SCROLL
 void setScrollDefinition(uint8_t top_fix_height, uint8_t bottom_fix_height, bool _scroll_direction);
 void VerticalScroll(uint8_t _vsp); 
+#endif
 
 // Shapes
+#if defined TFT_ENABLE_SHAPES
 void drawPixel(uint8_t , uint8_t , uint16_t );
 void drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color);
 void drawFastVLine(uint8_t x, uint8_t y, uint8_t h, uint16_t color);
@@ -144,6 +159,7 @@ void fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color);
 
 void drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color); 
 void fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color); 
+#endif
 
 // Text
 #if defined(TFT_ENABLE_TEXT)
