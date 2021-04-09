@@ -17,6 +17,33 @@
 
 #include <stdint.h>
 
+#ifdef ENABLE_ALL
+  #if ! defined(ENABLE_TEST1)
+    #define ENABLE_TEST1
+  #endif
+  #if ! defined(ENABLE_TEST2)
+    #define ENABLE_TEST2
+  #endif
+  #if ! defined(ENABLE_TEST3)
+    #define ENABLE_TEST3
+  #endif
+  #if ! defined(ENABLE_TEST4)
+    #define ENABLE_TEST4
+  #endif
+  #if ! defined(ENABLE_TEST5)
+    #define ENABLE_TEST5
+  #endif
+  #if ! defined(ENABLE_TEST6)
+    #define ENABLE_TEST6
+  #endif
+  #if ! defined(ENABLE_TEST7)
+    #define ENABLE_TEST7
+  #endif
+  #if ! defined(ENABLE_TEST8)
+    #define ENABLE_TEST8
+  #endif
+#endif
+
 #define TEST_DELAY1() delay_s(1)
 #define TEST_DELAY2() delay_s(2)
 #define TEST_DELAY5() delay_s(5)
