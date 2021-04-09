@@ -80,7 +80,6 @@ uint8_t colstart = 0, rowstart = 0, _tft_type;
 // ******** FUNCTION  PROTOTYPES ************ 
 
 // SPI 
-void spiwrite(uint8_t);
 void write_command(uint8_t );
 void write_data(uint8_t );
 
