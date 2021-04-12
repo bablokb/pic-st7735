@@ -3,7 +3,7 @@
 //
 // Author: Bernhard Bablok
 //
-// https://github.com/bablokb/pic-spi
+// https://github.com/bablokb/pic-st7735
 // --------------------------------------------------------------------------
 
 #include "picconfig.h"
