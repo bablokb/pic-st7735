@@ -66,8 +66,8 @@
 #define __delay_ms(x)              delay_ms(x)
 
 #define spiwrite(data)             spi_write(data)
-#define SPI1_Initialize()          spi_init(SPI_SMP_EOD | SPI_CKE_I2A, \
-                                     SPI_SSPM_HOST_FOSC_4 | SPI_CKP_HIGH, \
+#define SPI1_Initialize()          spi_init(SPI_SMP_MOD | SPI_CKE_A2I, \
+                                     SPI_SSPM_HOST_FOSC_4 | SPI_CKP_LOW, \
                                      0x0)
 
 #define spi_cs_low()               GP_SPI_CS = 0
