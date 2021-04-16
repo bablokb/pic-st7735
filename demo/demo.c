@@ -44,7 +44,15 @@ static void isr(void) __interrupt 0 {
 
 void main(void) {
   init();
+#ifdef TFT_ENABLE_BLACK
   TFT_BlackTab_Initialize();
+#elif defined(TFT_ENABLE_GREEN)
+  TFT_GreenTab_Initialize();
+#elif defined(TFT_ENABLE_RED)
+  TFT_RedTab_Initialize();
+#elif defined(TFT_ENABLE_GENERIC)
+  TFT_ST7735B_Initialize();
+#endif
   setTextWrap(true);
   TEST_DELAY1();
   fillScreen(ST7735_BLACK);
