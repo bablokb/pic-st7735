@@ -66,7 +66,7 @@
 #define __delay_ms(x)              delay_ms(x)
 
 #define spiwrite(data)             spi_write(data)
-#define SPI1_Initialize()          spi_init(SPI_SMP_MOD | SPI_CKE_A2I, \
+#define spiinit()                  spi_init(SPI_SMP_MOD | SPI_CKE_A2I, \
                                      SPI_SSPM_HOST_FOSC_4 | SPI_CKP_LOW, \
                                      0x0)
 
@@ -679,7 +679,7 @@ void TFT_GreenTab_Initialize(){
 #endif
   tft_dc_config();
   tft_dc_low() ;
-  SPI1_Initialize();
+  spiinit();
   Rcmd1();
   Rcmd2green();
   Rcmd3();
@@ -710,7 +710,7 @@ void TFT_RedTab_Initialize(){
 #endif
   tft_dc_config();
   tft_dc_low();
-  SPI1_Initialize();
+  spiinit();
   Rcmd1();
   Rcmd2red();
   Rcmd3();
@@ -726,7 +726,7 @@ void TFT_BlackTab_Initialize(){
 #endif
   tft_dc_config();
   tft_dc_low() ;
-  SPI1_Initialize();
+  spiinit();
   Rcmd1();
   Rcmd2red();
   Rcmd3();
@@ -744,7 +744,7 @@ void TFT_ST7735B_Initialize(){
 #endif
   tft_dc_config();
   tft_dc_low() ;
-  SPI1_Initialize();
+  spiinit();
   Bcmd();
   _tft_type = 2;
 }
