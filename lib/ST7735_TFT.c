@@ -72,15 +72,16 @@
 
 #define spi_cs_low()               GP_SPI_CS = 0
 #define spi_cs_high()              GP_SPI_CS = 1
-#define spi_cs_output()            bitclear(ANSEL_SPI_CS,PIN_SPI_CS)
 
 #define tft_dc_low()               GP_TFT_DC = 0
 #define tft_dc_high()              GP_TFT_DC = 1
-#define tft_dc_output()            bitclear(ANSEL_TFT_DC,PIN_TFT_DC)
+#define tft_dc_config()            bitclear(ANSEL_TFT_DC,PIN_TFT_DC); \
+                                    bitclear(TRIS_TFT_DC,PIN_TFT_DC)
 
 #define tft_rst_low()              GP_TFT_RST = 0
 #define tft_rst_high()             GP_TFT_RST = 1
-#define tft_rst_output()           bitclear(ANSEL_TFT_RST,PIN_TFT_RST)
+#define tft_rst_config()           bitclear(ANSEL_TFT_RST,PIN_TFT_RST); \
+                                    bitclear(TRIS_TFT_RST,PIN_TFT_RST)
 // ----------------------------------------------------------------
 
 // Write an SPI command
@@ -676,10 +677,8 @@ void TFT_GreenTab_Initialize(){
 #if defined TFT_ENABLE_RESET
   TFT_ResetPIN();
 #endif
-  spi_cs_high() ;
+  tft_dc_config();
   tft_dc_low() ;
-  spi_cs_output();
-  tft_dc_output();
   SPI1_Initialize();
   Rcmd1();
   Rcmd2green();
@@ -693,7 +692,7 @@ void TFT_GreenTab_Initialize(){
 // Function for Hardware Reset pin 
 #if defined TFT_ENABLE_RESET
 void TFT_ResetPIN() {
-  tft_rst_output() ;
+  tft_rst_config() ;
   tft_rst_high() ;
   __delay_ms(10);
   tft_rst_low() ;
@@ -709,10 +708,8 @@ void TFT_RedTab_Initialize(){
 #if defined TFT_ENABLE_RESET
   TFT_ResetPIN();
 #endif
-  spi_cs_high();
+  tft_dc_config();
   tft_dc_low();
-  spi_cs_output();
-  tft_dc_output();
   SPI1_Initialize();
   Rcmd1();
   Rcmd2red();
@@ -727,10 +724,8 @@ void TFT_BlackTab_Initialize(){
 #if defined TFT_ENABLE_RESET
   TFT_ResetPIN();
 #endif
-  spi_cs_high();
+  tft_dc_config();
   tft_dc_low() ;
-  spi_cs_output();
-  tft_dc_output();
   SPI1_Initialize();
   Rcmd1();
   Rcmd2red();
@@ -747,10 +742,8 @@ void TFT_ST7735B_Initialize(){
 #if defined TFT_ENABLE_RESET
   TFT_ResetPIN();
 #endif
-  spi_cs_high();
+  tft_dc_config();
   tft_dc_low() ;
-  spi_cs_output();
-  tft_dc_output();
   SPI1_Initialize();
   Bcmd();
   _tft_type = 2;
