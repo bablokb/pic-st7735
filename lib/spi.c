@@ -38,6 +38,7 @@ void spi_init(uint8_t status, uint8_t control, uint8_t add) {
 #ifdef SPI_HOST
   bitclear(TRIS_SPI_CLK,PIN_SPI_CLK);     // CLK is output
   bitclear(TRIS_SPI_CS,PIN_SPI_CS);       // CS is output
+  GP_SPI_CS = 1;                          // deselect device as default
 #else // not SPI_HOST
   bitset(TRIS_SPI_CLK,PIN_SPI_CLK);       // CLK is input
   bitset(TRIS_SPI_SS,PIN_SPI_SS);         // SS  is input
