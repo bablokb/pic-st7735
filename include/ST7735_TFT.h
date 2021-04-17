@@ -1,15 +1,13 @@
-/*
-* Project Name: ST7735, 128 by 128, 1.44", red pcb,  SPI TFT module, library.  
-* File: ST7735.h
-* Description: library header file   
-* Author: Gavin Lyons.
-* Complier: xc8 v2.10 compiler
-* PIC: PIC16F18346
-* IDE:  MPLAB X v5.30
-* Created Sep 2020
-* Description: See URL for full details.
-* URL: https://github.com/gavinlyonsrepo/pic_16F18346_projects
-*/
+// --------------------------------------------------------------------------
+// ST7735-library (declaration)
+//
+// Author: Bernhard Bablok
+//
+// The code is based on work from Gavin Lyons, see
+// https://github.com/gavinlyonsrepo/pic_16F18346_projects
+//
+// https://github.com/bablokb/pic-st7735
+// --------------------------------------------------------------------------
 
 #ifndef ST7735_TFT_H
 #define ST7735_TFT_H

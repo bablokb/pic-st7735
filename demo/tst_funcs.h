@@ -1,16 +1,13 @@
-/*
-* Project Name: ST7735, 128 by 128, 1.44", red pcb,  SPI TFT module, library. 
-* File: main.c
-* Description: test file  
-* Author: Gavin Lyons.
-* Version: 1.0
-* Complier: xc8 v2.10 compiler
-* PIC: PIC16F18346
-* IDE:  MPLAB X v5.30
-* Created Sep 2020
-* Description: See URL for full details.
-* URL: https://github.com/gavinlyonsrepo/pic_16F18346_projects
-*/
+// --------------------------------------------------------------------------
+// ST7735-library (declaration of test-functions)
+//
+// Author: Bernhard Bablok
+//
+// The code is based on work from Gavin Lyons, see
+// https://github.com/gavinlyonsrepo/pic_16F18346_projects
+//
+// https://github.com/bablokb/pic-st7735
+// --------------------------------------------------------------------------
 
 #ifndef TEST_FUNCS_H
 #define TEST_FUNCS_H

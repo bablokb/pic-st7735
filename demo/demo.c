@@ -3,6 +3,9 @@
 //
 // Author: Bernhard Bablok
 //
+// The code is based on work from Gavin Lyons, see
+// https://github.com/gavinlyonsrepo/pic_16F18346_projects
+//
 // https://github.com/bablokb/pic-st7735
 // --------------------------------------------------------------------------
 

@@ -1,11 +1,9 @@
 ; --------------------------------------------------------------------------
-; Demo-program for the SN74HC595
+; ST7735-library (implementation of delay-functions)
 ;
-; Definition of delay-functions
-; 
-; Author: B-bablok
-; https://github.com/bablokb/pic-sn74hc595
+; Author: Bernhard Bablok
 ;
+; https://github.com/bablokb/pic-st7735
 ; --------------------------------------------------------------------------
 #include "picconfig.inc"
 

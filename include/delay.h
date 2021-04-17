@@ -1,12 +1,9 @@
 // --------------------------------------------------------------------------
-// Demo-program for the SN74HC595
-//
-// Declaration of delay-functions
+// ST7735-library (declaration of delay-functions)
 //
 // Author: Bernhard Bablok
 //
-// https://github.com/bablokb/pic-sn74hc595
-//
+// https://github.com/bablokb/pic-st7735
 // --------------------------------------------------------------------------
 
 #ifndef __DELAY_H
