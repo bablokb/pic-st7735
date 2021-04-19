@@ -98,6 +98,10 @@ void main(void) {
   fillScreen(ST7735_BLACK);
 #if defined(TFT_ENABLE_TEXT)
   drawText(10, 10, "Test over!", ST7735_WHITE, ST7735_BLACK, 1);
+  drawFastHLine(0,0,80,ST7735_CYAN);
+  drawFastHLine(0,25,80,ST7735_CYAN);
+  drawFastVLine(0,0,25,ST7735_CYAN);
+  drawFastVLine(80,0,25,ST7735_CYAN);
 #endif
   while(1);
 }
