@@ -204,15 +204,6 @@ void setAddrWindow(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1){
   write_command(ST7735_RAMWR); // Write to RAM
 }
 
-#if defined TFT_ENABLE_SHAPES
-void drawPixel(uint8_t x, uint8_t y, uint16_t color){
-  if((x >= _width) || (y >= _height)) 
-    return;
-  setAddrWindow(x,y,x+1,y+1);
-  write_data(color >> 8);
-  write_data(color & 0xFF);
-}
-
 void fillRectangle(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color){
   uint8_t hi, lo;
   if((x >= _width) || (y >= _height))
@@ -255,6 +246,22 @@ void drawFastVLine(uint8_t x, uint8_t y, uint8_t h, uint16_t color){
   spi_cs_high() ;
 }
 
+void fillRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color) {
+  int16_t i;
+  for (i = x; i < x + w; i++) {
+    drawFastVLine(i, y, h, color);
+  }
+}
+
+void drawPixel(uint8_t x, uint8_t y, uint16_t color){
+  if((x >= _width) || (y >= _height)) 
+    return;
+  setAddrWindow(x,y,x+1,y+1);
+  write_data(color >> 8);
+  write_data(color & 0xFF);
+}
+
+#if defined TFT_ENABLE_SHAPES
 void drawFastHLine(uint8_t x, uint8_t y, uint8_t w, uint16_t color){
   uint8_t hi, lo;
   if((x >= _width) || (y >= _height))
@@ -398,13 +405,6 @@ void drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color){
       y0 += ystep;
       err += dx;
     }
-  }
-}
-
-void fillRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color) {
-  int16_t i;
-  for (i = x; i < x + w; i++) {
-    drawFastVLine(i, y, h, color);
   }
 }
 
