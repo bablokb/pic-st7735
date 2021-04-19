@@ -229,6 +229,23 @@ void fillScreen(uint16_t color) {
   fillRectangle(0, 0, _width, _height, color);
 }
 
+void drawFastHLine(uint8_t x, uint8_t y, uint8_t w, uint16_t color){
+  uint8_t hi, lo;
+  if((x >= _width) || (y >= _height))
+    return;
+  if((x + w - 1) >= _width)
+    w = _width - x;
+  hi = color >> 8; lo = color;
+  setAddrWindow(x, y, x + w - 1, y);
+  tft_dc_high();
+  spi_cs_low();
+  while (w--) {
+    spiwrite(hi);
+    spiwrite(lo);
+  }
+  spi_cs_high() ;
+}
+
 void drawFastVLine(uint8_t x, uint8_t y, uint8_t h, uint16_t color){
   uint8_t hi, lo;
   if((x >= _width) || (y >= _height))
@@ -262,23 +279,6 @@ void drawPixel(uint8_t x, uint8_t y, uint16_t color){
 }
 
 #if defined TFT_ENABLE_SHAPES
-void drawFastHLine(uint8_t x, uint8_t y, uint8_t w, uint16_t color){
-  uint8_t hi, lo;
-  if((x >= _width) || (y >= _height))
-    return;
-  if((x + w - 1) >= _width)
-    w = _width - x;
-  hi = color >> 8; lo = color;
-  setAddrWindow(x, y, x + w - 1, y);
-  tft_dc_high();
-  spi_cs_low();
-  while (w--) {
-    spiwrite(hi);
-    spiwrite(lo);
-  }
-  spi_cs_high() ;
-}
-
 void drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
   int16_t f, ddF_x, ddF_y, x, y;
   f = 1 - r, ddF_x = 1, ddF_y = -2 * r, x = 0, y = r;
