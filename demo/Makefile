@@ -17,6 +17,7 @@ PORT_SPI_CS = A
 PIN_TFT_DC   = 5
 PORT_TFT_DC  = A
 
+WITH_RESET = 1
 # reset (optional)
 ifneq ($(WITH_RESET),)
 PIN_TFT_RST  = 2
