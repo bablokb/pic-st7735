@@ -2,7 +2,7 @@
 // ST7735-library (hw-specific defines and interfaces)
 //
 // If you want to port the library to a different platform, change this
-// include (function-map at the end of the file).
+// include (pins and ports, includes, function-map at the end of the file).
 //
 // Author: Bernhard Bablok
 //
@@ -30,9 +30,6 @@
 #ifndef PORT_TFT_DC
   #define PORT_TFT_DC A
 #endif
-#define ANSEL_TFT_DC _CONCAT(ANSEL,PORT_TFT_DC)
-#define TRIS_TFT_DC  _CONCAT(TRIS,PORT_TFT_DC)
-#define GP_TFT_DC    _CONCAT(R,_CONCAT(PORT_TFT_DC,PIN_TFT_DC))
 
 // TFT_RST output pin
 #ifndef PIN_TFT_RST
@@ -41,17 +38,28 @@
 #ifndef PORT_TFT_RST
   #define PORT_TFT_RST A
 #endif
+// ----------------------------------------------------------------
+
+// ----------------------------------------------------------------
+// helper macros
+
+#define ANSEL_TFT_DC _CONCAT(ANSEL,PORT_TFT_DC)
+#define TRIS_TFT_DC  _CONCAT(TRIS,PORT_TFT_DC)
+#define GP_TFT_DC    _CONCAT(R,_CONCAT(PORT_TFT_DC,PIN_TFT_DC))
 #define ANSEL_TFT_RST _CONCAT(ANSEL,PORT_TFT_RST)
 #define TRIS_TFT_RST  _CONCAT(TRIS,PORT_TFT_RST)
 #define GP_TFT_RST    _CONCAT(R,_CONCAT(PORT_TFT_RST,PIN_TFT_RST))
 // ----------------------------------------------------------------
+
+// ----------------------------------------------------------------
+// necessary includes
 
 #include "picconfig.h"
 #include "spi.h"
 #include "delay.h"
 
 // ----------------------------------------------------------------
-// map functions
+// function-map
 #ifdef __delay_ms
 #undef __delay_ms
 #endif
