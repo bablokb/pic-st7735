@@ -126,6 +126,12 @@ void Rcmd3();
 // Misc + Screen related
 void setAddrWindow(uint8_t , uint8_t , uint8_t , uint8_t );
 void fillScreen(uint16_t color); 
+void drawFastVLine(uint8_t x, uint8_t y, uint8_t h, uint16_t color);
+void drawFastHLine(uint8_t x, uint8_t y, uint8_t w, uint16_t color);
+void drawPixel(uint8_t , uint8_t , uint16_t );
+void fillRectangle(uint8_t , uint8_t , uint8_t , uint8_t , uint16_t );
+void fillRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color);
+
 void invertDisplay(bool i); 
 void NormalDisplay(void);
 void pushColor(uint16_t color);
@@ -138,23 +144,14 @@ void VerticalScroll(uint8_t _vsp);
 
 // Shapes
 #if defined TFT_ENABLE_SHAPES
-void drawPixel(uint8_t , uint8_t , uint16_t );
 void drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color);
-void drawFastVLine(uint8_t x, uint8_t y, uint8_t h, uint16_t color);
-void drawFastHLine(uint8_t x, uint8_t y, uint8_t w, uint16_t color);
-
 void drawRectWH(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color);
-void fillRectangle(uint8_t , uint8_t , uint8_t , uint8_t , uint16_t );
-void fillRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color); 
-
 void drawRoundRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t r, uint16_t color); 
 void fillRoundRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t r, uint16_t color);
-
 void drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color); 
 void drawCircleHelper(int16_t x0, int16_t y0, int16_t r, uint8_t cornername, uint16_t color); 
 void fillCircleHelper(int16_t x0, int16_t y0, int16_t r, uint8_t cornername, int16_t delta, uint16_t color); 
 void fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color); 
-
 void drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color); 
 void fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color); 
 #endif
