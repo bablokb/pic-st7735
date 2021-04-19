@@ -10,6 +10,7 @@
 // --------------------------------------------------------------------------
 
 #include "picconfig.h"
+#include "spi.h"
 #include "tst_funcs.h"
 #include "ST7735_TFT.h"
 
@@ -47,6 +48,12 @@ static void isr(void) __interrupt 0 {
 
 void main(void) {
   init();
+  // use spi-mode 0,0 (SPI_SMP_MOD not relevant, since pic only sends data)
+  // baud-rate is 1MHz (4MHz/4, no scaling)
+  spi_init(SPI_SMP_MOD | SPI_CKE_A2I,
+           SPI_SSPM_HOST_FOSC_4 | SPI_CKP_LOW,
+           0x0);
+
 #ifdef TFT_ENABLE_BLACK
   TFT_BlackTab_Initialize();
 #elif defined(TFT_ENABLE_GREEN)
