@@ -1,6 +1,10 @@
 // --------------------------------------------------------------------------
 // ST7735-library (implementation)
 //
+// This code should be portable and not PIC-specific.
+// Hardware-specific implementations (e.g. #defines for 
+// functions like spiwrite() or tft_dc_low()) are in hw.h
+//
 // Author: Bernhard Bablok
 //
 // The code is based on work from Gavin Lyons, see
@@ -11,72 +15,12 @@
 
 #include <stdint.h>
 #include <stdlib.h>
-#include "picconfig.h"
-
-// ----------------------------------------------------------------
-// pin and ports (usually defined in the makefile)
-
-// chip-select output pin
-#ifndef PIN_SPI_CS
-  #define PIN_SPI_CS 4
-#endif
-#ifndef PORT_SPI_CS
-  #define PORT_SPI_CS A
-#endif
-
-// TFT_DC output pin
-#ifndef PIN_TFT_DC
-  #define PIN_TFT_DC 5
-#endif
-#ifndef PORT_TFT_DC
-  #define PORT_TFT_DC A
-#endif
-#define ANSEL_TFT_DC _CONCAT(ANSEL,PORT_TFT_DC)
-#define TRIS_TFT_DC  _CONCAT(TRIS,PORT_TFT_DC)
-#define GP_TFT_DC    _CONCAT(R,_CONCAT(PORT_TFT_DC,PIN_TFT_DC))
-
-// TFT_RST output pin
-#ifndef PIN_TFT_RST
-  #define PIN_TFT_RST 2
-#endif
-#ifndef PORT_TFT_RST
-  #define PORT_TFT_RST A
-#endif
-#define ANSEL_TFT_RST _CONCAT(ANSEL,PORT_TFT_RST)
-#define TRIS_TFT_RST  _CONCAT(TRIS,PORT_TFT_RST)
-#define GP_TFT_RST    _CONCAT(R,_CONCAT(PORT_TFT_RST,PIN_TFT_RST))
-// ----------------------------------------------------------------
-
-#include "spi.h"
-#include "delay.h"
+#include "hw.h"
 #include "ST7735_TFT.h"
 
 #if defined(TFT_ENABLE_TEXT)
 #include "TextFonts.h"
 #endif
-
-// ----------------------------------------------------------------
-// map functions
-#ifdef __delay_ms
-#undef __delay_ms
-#endif
-#define __delay_ms(x)              delay_ms(x)
-
-#define spiwrite(data)             spi_write(data)
-
-#define spi_cs_low()               GP_SPI_CS = 0
-#define spi_cs_high()              GP_SPI_CS = 1
-
-#define tft_dc_low()               GP_TFT_DC = 0
-#define tft_dc_high()              GP_TFT_DC = 1
-#define tft_dc_config()            bitclear(ANSEL_TFT_DC,PIN_TFT_DC); \
-                                    bitclear(TRIS_TFT_DC,PIN_TFT_DC)
-
-#define tft_rst_low()              GP_TFT_RST = 0
-#define tft_rst_high()             GP_TFT_RST = 1
-#define tft_rst_config()           bitclear(ANSEL_TFT_RST,PIN_TFT_RST); \
-                                    bitclear(TRIS_TFT_RST,PIN_TFT_RST)
-// ----------------------------------------------------------------
 
 // Write an SPI command
 void write_command(uint8_t cmd_){
