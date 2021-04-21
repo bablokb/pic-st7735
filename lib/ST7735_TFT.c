@@ -22,6 +22,18 @@
 #include "TextFonts.h"
 #endif
 
+// internal state (TODO: put into structure and pass as arg to allow
+// more than a single display)
+bool _wrap = true;
+uint8_t _colstart = 0, _rowstart = 0, _tft_type;
+
+// we keept this public
+uint8_t tft_width = 128, tft_height = 160;
+
+// because of code compatibilty
+#define _width         tft_width
+#define _height        tft_height
+
 // Write an SPI command
 void write_command(uint8_t cmd_){
   tft_dc_low() ;
@@ -193,14 +205,14 @@ void Rcmd3(){
 void setAddrWindow(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1){
   write_command(ST7735_CASET);
   write_data(0);
-  write_data(x0 + colstart);
+  write_data(x0 + _colstart);
   write_data(0);
-  write_data(x1 + colstart);
+  write_data(x1 + _colstart);
   write_command(ST7735_RASET);
   write_data(0);
-  write_data(y0 + rowstart);
+  write_data(y0 + _rowstart);
   write_data(0);
-  write_data(y1 + rowstart);
+  write_data(y1 + _rowstart);
   write_command(ST7735_RAMWR); // Write to RAM
 }
 
@@ -511,7 +523,7 @@ void drawChar(uint8_t x, uint8_t y, uint8_t c, uint16_t color, uint16_t bg,  uin
 
 
 void setTextWrap(bool w){
-  wrap = w;
+  _wrap = w;
 }
 
 // Draw text character array to screen
@@ -521,7 +533,7 @@ void drawText(uint8_t x, uint8_t y, const char *_text, uint16_t color, uint16_t 
   cursor_x = x, cursor_y = y;
   textsize = strlen(_text);
   for(i = 0; i < textsize; i++){
-    if(wrap && ((cursor_x + size * 5) > _width)) {
+    if(_wrap && ((cursor_x + size * 5) > _width)) {
       cursor_x = 0;
       cursor_y = cursor_y + size * 7 + 3 ;
       if(cursor_y > _height) cursor_y = _height;
@@ -620,8 +632,8 @@ void TFT_GreenTab_Initialize(){
   Rcmd1();
   Rcmd2green();
   Rcmd3();
-  colstart = 2;
-  rowstart = 1;
+  _colstart = 2;
+  _rowstart = 1;
   _tft_type = 0;
 }
 #endif

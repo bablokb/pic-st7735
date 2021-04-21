@@ -29,9 +29,9 @@
   #endif
 #endif
 
+extern uint8_t tft_width, tft_height;
+
 #define _swap(a, b) { int16_t t; t = a; a = b; b = t;}
-#define _width         128
-#define _height        160
 #define ST7735_NOP     0x00
 #define ST7735_SWRESET 0x01
 #define ST7735_RDDID   0x04
@@ -84,8 +84,6 @@
 
 #define LCD_ASCII_OFFSET 0x20 //0x20, ASCII character for Space, The font table starts with this character
 
-bool wrap = true;
-uint8_t colstart = 0, rowstart = 0, _tft_type;
 
 // ******** FUNCTION  PROTOTYPES ************ 
 
