@@ -13,17 +13,20 @@
 
 #include "picconfig.h"
 
-#define PIN_SPI_SDO   7
-#define PORT_SPI_SDO RC
+#define PIN_SPI_SDO  7
+#define PORT_SPI_SDO C
 
-#define PIN_SPI_CLK 6
-#define PORT_SPI_CLK RB
+#define PIN_SPI_CLK  6
+#define PORT_SPI_CLK B
 
-#define PIN_SPI_SDI 4
-#define PORT_SPI_SDI RB
+#define PIN_SPI_SDI  4
+#define PORT_SPI_SDI B
 
-#define PIN_SPI_SS 6
-#define PORT_SPI_SS RC
+#ifndef SPI_HOST
+  // only relevant for SPI-device
+  #define PIN_SPI_SS   6
+  #define PORT_SPI_SS  C
+#endif
 
 // SPI-registers
 #define SPI_STATUS_REG  SSPSTAT
