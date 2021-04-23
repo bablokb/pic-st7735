@@ -95,13 +95,21 @@ void main(void) {
   Test8();
 #endif
 
-  fillScreen(ST7735_BLACK);
 #if defined(TFT_ENABLE_TEXT)
+  #if defined(ENABLE_TESTR) && defined(TFT_ENABLE_ROTATE)
+  for (size_t i = 0; i < 4; i++) {
+    setRotation(i);
+  #endif
+  fillScreen(ST7735_BLACK);
   drawText(10, 10, "Test over!", ST7735_WHITE, ST7735_BLACK, 1);
   drawFastHLine(0,0,80,ST7735_CYAN);
   drawFastHLine(0,25,80,ST7735_CYAN);
   drawFastVLine(0,0,25,ST7735_CYAN);
   drawFastVLine(80,0,25,ST7735_CYAN);
+  #if defined(ENABLE_TESTR) && defined(TFT_ENABLE_ROTATE)
+  TEST_DELAY1();
+  }
+  #endif
 #endif
   while(1);
 }
