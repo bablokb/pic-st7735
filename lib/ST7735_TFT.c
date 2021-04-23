@@ -25,7 +25,7 @@
 // internal state (TODO: put into structure and pass as arg to allow
 // more than a single display)
 bool _wrap = true;
-uint8_t _colstart = 0, _rowstart = 0, _tft_type;
+uint8_t _colstart = 0, _rowstart = 0, _tft_type, _rotation = 0, _xstart = 0, _ystart = 0;
 
 // we keept this public
 uint8_t tft_width = 128, tft_height = 160;
@@ -196,23 +196,23 @@ void Rcmd3(){
 
 /*
   SPI displays set an address window rectangle for blitting pixels
-  Parameter1:  Top left corner x coordinate
-  Parameter2:  y  Top left corner x coordinate
-  Parameter3:  w  Width of window
-  Parameter4:  h  Height of window
+  Parameter1:  x0 Top left corner x coordinate
+  Parameter2:  y0 Top left corner y coordinate
+  Parameter3:  x1 Lower right corner x coordinate
+  Parameter4:  y1 Lower right corner y coordinate
  https://en.wikipedia.org/wiki/Bit_blit
 */
 void setAddrWindow(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1){
   write_command(ST7735_CASET);
   write_data(0);
-  write_data(x0 + _colstart);
+  write_data(x0 + _xstart);
   write_data(0);
-  write_data(x1 + _colstart);
+  write_data(x1 + _xstart);
   write_command(ST7735_RASET);
   write_data(0);
-  write_data(y0 + _rowstart);
+  write_data(y0 + _ystart);
   write_data(0);
-  write_data(y1 + _rowstart);
+  write_data(y1 + _ystart);
   write_command(ST7735_RAMWR); // Write to RAM
 }
 
@@ -693,6 +693,40 @@ void TFT_ST7735B_Initialize(){
   tft_dc_low() ;
   Bcmd();
   _tft_type = 2;
+}
+#endif
+
+#if defined TFT_ENABLE_ROTATE
+void setRotation(uint8_t m) {
+  // m can be 0-3
+  uint8_t madctl = 0;
+
+  _rotation = m % 4;
+
+  switch (_rotation) {
+  case 0:
+    madctl = ST7735_MADCTL_MX | ST7735_MADCTL_MY | ST7735_MADCTL_RGB;
+    _xstart = _colstart;
+    _ystart = _rowstart;
+    break;
+  case 1:
+    madctl = ST7735_MADCTL_MY | ST7735_MADCTL_MV | ST7735_MADCTL_RGB;
+    _ystart = _colstart;
+    _xstart = _rowstart;
+    break;
+  case 2:
+    madctl = ST7735_MADCTL_RGB;
+    _xstart = _colstart;
+    _ystart = _rowstart;
+    break;
+  case 3:
+    madctl = ST7735_MADCTL_MX | ST7735_MADCTL_MV | ST7735_MADCTL_RGB;
+    _ystart = _colstart;
+    _xstart = _rowstart;
+    break;
+  }
+  write_command(ST7735_MADCTL);
+  write_data(madctl);
 }
 #endif
 

@@ -27,6 +27,9 @@
   #if !defined TFT_ENABLE_TEXT
     #define TFT_ENABLE_TEXT
   #endif
+  #if !defined TFT_ENABLE_ROTATE
+    #define TFT_ENABLE_ROTATE
+  #endif
 #endif
 
 extern uint8_t tft_width, tft_height;
@@ -52,6 +55,11 @@ extern uint8_t tft_width, tft_height;
 #define ST7735_VSCRDEF 0x33
 #define ST7735_COLMOD  0x3A
 #define ST7735_MADCTL  0x36
+#define ST7735_MADCTL_MY 0x80
+#define ST7735_MADCTL_MX 0x40
+#define ST7735_MADCTL_MV 0x20
+#define ST7735_MADCTL_ML 0x10
+#define ST7735_MADCTL_RGB 0x00
 #define ST7735_VSCRSADD 0x37
 #define ST7735_FRMCTR1 0xB1
 #define ST7735_FRMCTR2 0xB2
@@ -159,6 +167,10 @@ void fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, in
 void drawChar(uint8_t x, uint8_t y, uint8_t c, uint16_t color, uint16_t bg,  uint8_t size);
 void setTextWrap(bool w);
 void drawText(uint8_t x, uint8_t y, const char *_text, uint16_t color, uint16_t bg, uint8_t size);
+#endif
+
+#if defined TFT_ENABLE_ROTATE
+void setRotation(uint8_t m);
 #endif
 
 // ------ not functional yet ----------------------------------------------
