@@ -9,7 +9,9 @@
 // https://github.com/bablokb/pic-st7735
 // --------------------------------------------------------------------------
 
-#include "picconfig.h"
+#if defined _PTC
+  #include "picconfig.h"
+#endif
 #include "delay.h"
 #include "tst_funcs.h"
 #include "ST7735_TFT.h"

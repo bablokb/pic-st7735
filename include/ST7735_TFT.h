@@ -15,7 +15,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
-#include "picconfig.h"
+
+#if defined _PTC
+  #include "picconfig.h"
+#endif
 
 #if defined TFT_ENABLE_ALL
   #if !defined TFT_ENABLE_SHAPES
