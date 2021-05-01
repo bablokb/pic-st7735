@@ -105,6 +105,9 @@ void Test6(void) {
 #endif
 
 #if defined(ENABLE_TEST7)
+// additional information on how scrolling works:
+//   https://forum.arduino.cc/t/st7735s-scrolling/564506/8
+//   https://ccspicc.blogspot.com/2016/11/st7735-tft-screen-vertical-scrolling.html
 void Test7(void) {
   const uint8_t LINES = 10, LINE_SIZE = 10, LINE_OFFSET = 5, TOP_FIXED = 0, BOTTOM_FIXED = 0;
   for (uint8_t i = 0; i < LINES; i++) {
