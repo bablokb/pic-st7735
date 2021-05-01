@@ -41,6 +41,6 @@ include only the features you need. Currently, the library supports the followin
   - `TFT_ENABLE_RESET`:   use reset-pin during initialization
   - `TFT_ENABLE_TEXT`:    enable text-functions
   - `TFT_ENABLE_SHAPES`:  enable shape-functions
-  - `TFT_ENABLE_SCROLL`:  enable scroll-functions (untested)
+  - `TFT_ENABLE_SCROLL`:  enable scroll-functions
   - `TFT_ENABLE_ROTATE`:  enable rotation
   - `TFT_ENABLE_BMP`:     enable bitmap-functions (not usable yet)
