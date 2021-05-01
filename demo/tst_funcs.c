@@ -66,7 +66,7 @@ void Test2(void) {
 #endif
 
 #if defined(ENABLE_TEST3)
-void Test3(void) { //pixels and lines 
+void Test3(void) { //pixels and LINES 
   drawPixel(5, 5, ST7735_RED);
   drawLine(10, 10, 30, 30, ST7735_RED);
   drawFastVLine(40, 40, 40, ST7735_GREEN);
@@ -106,11 +106,21 @@ void Test6(void) {
 
 #if defined(ENABLE_TEST7)
 void Test7(void) {
-  const char *txtthree = "  scroll  ";
-  drawText(0, 45, txtthree, ST7735_CYAN, ST7735_BLACK, 1); 
-  setScrollDefinition(100, 10, 0);
-  VerticalScroll(0);
-  TEST_DELAY2();
+  const uint8_t LINES = 10, LINE_SIZE = 10, LINE_OFFSET = 5, TOP_FIXED = 0, BOTTOM_FIXED = 0;
+  for (uint8_t i = 0; i < LINES; i++) {
+    drawText(0, LINE_OFFSET+i*LINE_SIZE,"lorem ipsum", ST7735_WHITE, ST7735_BLACK, 1);
+  }
+  setScrollDefinition(TOP_FIXED,BOTTOM_FIXED,1);  // bottom-to-top
+  uint8_t pos = LINE_OFFSET;
+  for (uint8_t i = 0; i < LINES; i++) {
+    for (uint8_t j = 0; j < LINE_SIZE; j++) {
+      VerticalScroll(pos + TOP_FIXED);
+      pos++;
+      // check pos if necessary: must be < tft_height - TOP_FIXED - BOTTOM_FIXED
+      delay_ms(100);  
+    }
+    TEST_DELAY2();
+  }
   NormalDisplay(); 
   fillScreen(ST7735_BLACK);
 }
