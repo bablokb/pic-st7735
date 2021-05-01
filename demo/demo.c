@@ -89,7 +89,7 @@ void main(void) {
   Test6();
 #endif
 #if defined(ENABLE_TEST7)
-  // Test7(); //TODO Scroll
+  Test7();
 #endif
 #if defined(ENABLE_TEST8)
   Test8();
