@@ -60,10 +60,8 @@
 
 // ----------------------------------------------------------------
 // function-map
-#ifdef __delay_ms
-#undef __delay_ms
-#endif
-#define __delay_ms(x)              delay_ms(x)
+
+//#define __delay_ms(x)              __delay_ms(x)
 
 #define spiwrite(data)             spi_write(data)
 

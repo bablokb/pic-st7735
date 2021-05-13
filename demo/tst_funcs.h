@@ -39,11 +39,14 @@
   #if ! defined(ENABLE_TEST8)
     #define ENABLE_TEST8
   #endif
+  #if ! defined(ENABLE_TEST9)
+    #define ENABLE_TEST9
+  #endif
 #endif
 
-#define TEST_DELAY1() delay_s(1)
-#define TEST_DELAY2() delay_s(2)
-#define TEST_DELAY5() delay_s(5)
+#define TEST_DELAY1() __delay_ms(1000)
+#define TEST_DELAY2() __delay_ms(2000)
+#define TEST_DELAY5() __delay_ms(5000)
 
 void delay_s(uint8_t count);
 
@@ -73,5 +76,8 @@ void Test7(void); // scroll TODO not working in version 1.0
 #endif
 #if defined(ENABLE_TEST8)
 void Test8(void); // shapes media buttons graphic + invert display
+#endif
+#if defined(ENABLE_TEST9)
+void Test9(void); // glyph-fonts
 #endif
 #endif

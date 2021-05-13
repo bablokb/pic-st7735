@@ -35,7 +35,7 @@ static void init(void) {
   GIE      = 0;                  // global interrupt disable
 
   INIT_SPECIAL;
-  CLOCK_4MHZ;
+  CLOCK_4MHZ;                    // change _XTAL_FREQ in Makefile
 }
 
 ////////////////////////////////////////////////////////////////////////
