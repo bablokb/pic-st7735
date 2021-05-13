@@ -16,6 +16,10 @@
 #include "tst_funcs.h"
 #include "ST7735_TFT.h"
 
+#if defined ENABLE_TEST9
+  #include "FreeMonoOblique12pt7b.h"
+#endif
+
 void delay_s(uint8_t count) {
   for (int i=0; i<4*count; ++i) {
     delay_ms(250);
@@ -146,6 +150,24 @@ void Test8() {
   invertDisplay(true);   //invert display test
   TEST_DELAY1();
   invertDisplay(false);   //invert display test
+  TEST_DELAY2();
+  fillScreen(ST7735_BLACK);
+}
+#endif
+
+#if defined(ENABLE_TEST9)
+void Test9(void) {
+  const char *txt = "hello fonts";
+  setFont(&FreeMonoOblique12pt7b);
+  uint8_t y = 5;
+  drawText(10, y, txt, ST7735_WHITE, ST7735_BLACK, 1); y += 20;
+  drawText(10, y, txt,  ST7735_BLUE, ST7735_BLACK, 1); y += 20;
+  drawText(10, y, txt, ST7735_RED, ST7735_BLACK, 1); y += 20;
+  drawText(10, y, txt, ST7735_GREEN, ST7735_BLACK, 1); y += 20;
+  drawText(10, y, txt, ST7735_CYAN, ST7735_BLACK, 1);  y += 20;
+  drawText(10, y, txt, ST7735_MAGENTA, ST7735_BLACK, 1); y += 20;
+  drawText(10, y, txt, ST7735_YELLOW, ST7735_BLACK, 1); y += 20;
+  drawText(10, y, txt, ST7735_WHITE, ST7735_BLACK, 1);
   TEST_DELAY2();
   fillScreen(ST7735_BLACK);
 }
