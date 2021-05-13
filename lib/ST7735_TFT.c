@@ -18,7 +18,7 @@
 #include "hw.h"
 #include "ST7735_TFT.h"
 
-#if defined(TFT_ENABLE_TEXT)
+#if defined(TFT_ENABLE_TEXT) && ! defined(TFT_ENABLE_FONTS)
 #include "TextFonts.h"
 #endif
 
@@ -497,6 +497,12 @@ void fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, in
 #endif
 
 #if defined(TFT_ENABLE_TEXT)
+
+void setTextWrap(bool w){
+  _wrap = w;
+}
+
+#if !defined TFT_ENABLE_FONTS
 // Draw a single text character to screen
 void drawChar(uint8_t x, uint8_t y, uint8_t c, uint16_t color, uint16_t bg,  uint8_t size){
   int8_t i, j;
@@ -521,11 +527,6 @@ void drawChar(uint8_t x, uint8_t y, uint8_t c, uint16_t color, uint16_t bg,  uin
   }
 }
 
-
-void setTextWrap(bool w){
-  _wrap = w;
-}
-
 // Draw text character array to screen
 void drawText(uint8_t x, uint8_t y, const char *_text, uint16_t color, uint16_t bg, uint8_t size) {
   uint8_t cursor_x, cursor_y;
@@ -548,6 +549,7 @@ void drawText(uint8_t x, uint8_t y, const char *_text, uint16_t color, uint16_t 
     }
   }
 }
+#endif
 #endif
 
 void invertDisplay(bool i) {
@@ -604,7 +606,7 @@ void NormalDisplay(){
   write_command(ST7735_NORON);
 }
 
-// Convert 24-bit color to 16-bit color
+// Convert 24-abit color to 16-abit color
 int16_t Color565(int16_t r, int16_t g, int16_t b){           
   return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
 }
@@ -727,6 +729,79 @@ void setRotation(uint8_t m) {
   }
   write_command(ST7735_MADCTL);
   write_data(madctl);
+}
+#endif
+
+#if defined TFT_ENABLE_FONTS
+GFXfont *_gfxFont;
+void setFont(const GFXfont *f) {
+  _gfxFont = (GFXfont *)f;
+}
+
+// Draw text character array to screen
+void drawText(uint8_t x, uint8_t y, const char *_text,
+                         uint16_t color, uint16_t bg, uint8_t size) {
+  uint8_t cursor_x, cursor_y, first_char, last_char;
+  uint16_t textlen, i;
+
+  cursor_x = x, cursor_y = y;
+  first_char = _gfxFont->first;
+  last_char  = _gfxFont->last;
+  textlen    = strlen(_text);
+
+  for(i = 0; i < textlen; i++){
+    uint8_t c = _text[i];
+    if (c<first_char || c>last_char) {
+      continue;
+    }
+
+    GFXglyph *glyph = &(_gfxFont->glyph[c-first_char]);
+    uint8_t w = glyph->width, h = glyph->height;
+
+    if((w > 0) && (h > 0)) { // bitmap available
+      int16_t xo = glyph->xOffset;
+      if(_wrap && ((cursor_x + size * (xo + w)) > _width)) {
+        cursor_x = 0;
+        cursor_y += (int16_t)size * _gfxFont->yAdvance;
+      }
+      drawChar(cursor_x,cursor_y,c,color,bg,size);
+    }
+    cursor_x += glyph->xAdvance * (int16_t)size;
+  }
+}
+
+void drawChar(uint8_t x, uint8_t y, uint8_t c, uint16_t color,
+              uint16_t bg,  uint8_t size) {
+  c -= (uint8_t) (_gfxFont->first);
+  GFXglyph *glyph = _gfxFont->glyph + c;
+  uint8_t *bitmap = _gfxFont->bitmap;
+
+  uint16_t bo = glyph->bitmapOffset;
+  uint8_t w   = glyph->width, h = glyph->height;
+  int8_t xo   = glyph->xOffset, yo = glyph->yOffset;
+  uint8_t xx, yy, bits = 0, abit = 0;
+  int16_t xo16 = 0, yo16 = 0;
+
+  if (size > 1) {
+    xo16 = xo;
+    yo16 = yo;
+  }
+
+  for (yy = 0; yy < h; yy++) {
+    for (xx = 0; xx < w; xx++) {
+      if (!(abit++ & 7)) {
+        bits = bitmap[bo++];
+      }
+      if (bits & 0x80) {
+        if (size == 1) {
+          drawPixel(x+xo+xx, y+yo+yy,color);
+        } else {
+          fillRect(x+(xo16+xx)*size,y+(yo16+yy)*size,size,size,color);
+        }
+      }
+      bits <<= 1;
+    }
+  }
 }
 #endif
 
