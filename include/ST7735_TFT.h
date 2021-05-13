@@ -20,6 +20,15 @@
   #include "picconfig.h"
 #endif
 
+#if defined TFT_ENABLE_FONTS
+  #if !defined TFT_ENABLE_TEXT
+    #define TFT_ENABLE_TEXT
+  #endif
+  #if !defined PROGMEM
+    #define PROGMEM
+  #endif
+#endif
+
 #if defined TFT_ENABLE_ALL
   #if !defined TFT_ENABLE_SHAPES
     #define TFT_ENABLE_SHAPES
@@ -174,6 +183,28 @@ void drawText(uint8_t x, uint8_t y, const char *_text, uint16_t color, uint16_t 
 
 #if defined TFT_ENABLE_ROTATE
 void setRotation(uint8_t m);
+#endif
+
+#if defined TFT_ENABLE_FONTS
+/// Font data stored PER GLYPH
+typedef struct {
+  uint16_t bitmapOffset; ///< Pointer into GFXfont->bitmap
+  uint8_t width;         ///< Bitmap dimensions in pixels
+  uint8_t height;        ///< Bitmap dimensions in pixels
+  uint8_t xAdvance;      ///< Distance to advance cursor (x axis)
+  int8_t xOffset;        ///< X dist from cursor pos to UL corner
+  int8_t yOffset;        ///< Y dist from cursor pos to UL corner
+} GFXglyph;
+
+/// Data stored for FONT AS A WHOLE
+typedef struct {
+  uint8_t *bitmap;  ///< Glyph bitmaps, concatenated
+  GFXglyph *glyph;  ///< Glyph array
+  uint16_t first;   ///< ASCII extents (first char)
+  uint16_t last;    ///< ASCII extents (last char)
+  uint8_t yAdvance; ///< Newline distance (y axis)
+} GFXfont;
+void setFont(const GFXfont *f);
 #endif
 
 // ------ not functional yet ----------------------------------------------
