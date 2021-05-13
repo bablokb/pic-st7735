@@ -94,6 +94,9 @@ void main(void) {
 #if defined(ENABLE_TEST8)
   Test8();
 #endif
+#if defined(ENABLE_TEST9)
+  Test9();
+#endif
 
 #if defined(TFT_ENABLE_TEXT)
   #if defined(ENABLE_TESTR) && defined(TFT_ENABLE_ROTATE)
