@@ -4,10 +4,14 @@ ST7735 TFT-Library for PIC-Microcontrollers
 Status
 ------
 
-The code compiles and runs. Tested with a PIC12F1840 and xc8. Note that
-with the defaults from `demo/Makefile`, the code just fits into the
-PIC (uses 4072 of 4096 words, free version of xc8). The library code
-itself is much smaller (about 2K), the rest is tescode.
+The code compiles and runs. Tested with a PIC12F1840/PIC16F1829 and xc8.
+Note that with the defaults from `demo/Makefile`, the code just fits into the
+PIC12F1840 (uses 4072 of 4096 words, free version of xc8). The library code
+itself is much smaller (about 2K), the rest is test-code.
+
+Using glyph-fonts needs a lot of memory, here you need larger PICs (e.g.
+the PIC16F1829 with 8K of flash).
+
 
 Overview
 --------
@@ -43,4 +47,24 @@ include only the features you need. Currently, the library supports the followin
   - `TFT_ENABLE_SHAPES`:  enable shape-functions
   - `TFT_ENABLE_SCROLL`:  enable scroll-functions
   - `TFT_ENABLE_ROTATE`:  enable rotation
+  - `TFT_ENABLE_FONTS`:   enable glyph-fonts (see below)
   - `TFT_ENABLE_BMP`:     enable bitmap-functions (not usable yet)
+
+
+Fonts
+-----
+
+The ST7735-library uses a small standard-font, which is impossible to read
+unless you are really near the screen. You can scale the font, but the
+result is ugly.
+
+The solution to the problem are glyph-fonts. They take up a lot of space
+(2.5K-4K and more), so this might not fit into the available flash.
+
+This repository only distributes a single glyph-font
+`lib-st7735/include/FreeMonoOblique12pt7b.h`, others are available from
+the original Adafruit project <https://github.com/adafruit/Adafruit-GFX-Library/>.
+
+To use these fonts, you need to `#define TFT_ENABLE_FONTS` and set the
+font before drawing text. See `Test9()` in the demo-program for an
+example.
