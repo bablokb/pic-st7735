@@ -629,7 +629,6 @@ void TFT_GreenTab_Initialize(){
 #if defined TFT_ENABLE_RESET
   TFT_ResetPIN();
 #endif
-  tft_dc_config();
   tft_dc_low() ;
   Rcmd1();
   Rcmd2green();
@@ -643,7 +642,6 @@ void TFT_GreenTab_Initialize(){
 // Function for Hardware Reset pin 
 #if defined TFT_ENABLE_RESET
 void TFT_ResetPIN() {
-  tft_rst_config() ;
   tft_rst_high() ;
   __delay_ms(10);
   tft_rst_low() ;
@@ -659,7 +657,6 @@ void TFT_RedTab_Initialize(){
 #if defined TFT_ENABLE_RESET
   TFT_ResetPIN();
 #endif
-  tft_dc_config();
   tft_dc_low();
   Rcmd1();
   Rcmd2red();
@@ -674,7 +671,6 @@ void TFT_BlackTab_Initialize(){
 #if defined TFT_ENABLE_RESET
   TFT_ResetPIN();
 #endif
-  tft_dc_config();
   tft_dc_low() ;
   Rcmd1();
   Rcmd2red();
@@ -691,8 +687,7 @@ void TFT_ST7735B_Initialize(){
 #if defined TFT_ENABLE_RESET
   TFT_ResetPIN();
 #endif
-  tft_dc_config();
-  tft_dc_low() ;
+  tft_dc_low();
   Bcmd();
   _tft_type = 2;
 }

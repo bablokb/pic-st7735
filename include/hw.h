@@ -70,13 +70,9 @@
 
 #define tft_dc_low()               GP_TFT_DC = 0
 #define tft_dc_high()              GP_TFT_DC = 1
-#define tft_dc_config()            bitclear(ANSEL_TFT_DC,PIN_TFT_DC); \
-                                    bitclear(TRIS_TFT_DC,PIN_TFT_DC)
 
 #define tft_rst_low()              GP_TFT_RST = 0
 #define tft_rst_high()             GP_TFT_RST = 1
-#define tft_rst_config()           bitclear(ANSEL_TFT_RST,PIN_TFT_RST); \
-                                    bitclear(TRIS_TFT_RST,PIN_TFT_RST)
 // ----------------------------------------------------------------
 
 #endif

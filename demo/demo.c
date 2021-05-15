@@ -10,6 +10,7 @@
 // --------------------------------------------------------------------------
 
 #include "picconfig.h"
+#include "hw.h"
 #include "spi.h"
 #include "tst_funcs.h"
 #include "ST7735_TFT.h"
@@ -36,6 +37,11 @@ static void init(void) {
 
   INIT_SPECIAL;
   CLOCK_4MHZ;                    // change _XTAL_FREQ in Makefile
+
+  bitclear(ANSEL_TFT_DC,PIN_TFT_DC);
+  bitclear(TRIS_TFT_DC,PIN_TFT_DC);
+  bitclear(ANSEL_TFT_RST,PIN_TFT_RST);
+  bitclear(TRIS_TFT_RST,PIN_TFT_RST);
 }
 
 ////////////////////////////////////////////////////////////////////////
