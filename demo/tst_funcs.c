@@ -18,6 +18,9 @@
 #if defined ENABLE_TEST9
   #include "FreeMonoOblique12pt7b.h"
 #endif
+#if defined ENABLE_TEST9A
+  #include "FreeMonoOblique12pt_sub.h"
+#endif
 
 #if defined(ENABLE_TEST1)
 void Test1(void) {
@@ -161,6 +164,47 @@ void Test9(void) {
   drawText(10, y, txt, ST7735_GREEN, ST7735_BLACK, 1); y += lsize;
   drawText(10, y, txt, ST7735_CYAN, ST7735_BLACK, 1);  y += lsize;
   drawText(10, y, txt, ST7735_MAGENTA, ST7735_BLACK, 1); y += lsize;
+  TEST_DELAY5();
+  fillScreen(ST7735_BLACK);
+}
+#endif
+
+
+#if defined(ENABLE_TEST9A)
+
+const char* char_subset = " 0123456789.+-/%ChPa";
+
+char *txt_conv(const char *txt, char *buf, const uint8_t n) {
+  char c;
+  for (int i=0;i<strlen(txt);++i) {
+    c = txt[i];
+    for (int j=0;j<strlen(char_subset);++j) {
+      if (char_subset[j] == c) {
+        buf[i] = j+1;
+        break;
+      }
+    }
+  }
+  buf[strlen(txt)] = 0;
+  return buf;
+}
+
+#define BUF_LEN 24
+
+void Test9A(void) {
+  char buf[BUF_LEN];
+  setFont(&FreeMonoOblique12pt_sub);
+  setRotation(0);
+
+  fillScreen(ST7735_BLUE);
+  fillRoundRect(4,  4,120,48,10,ST7735_WHITE);
+  fillRoundRect(4, 56,120,48,10,ST7735_WHITE); //  4 + 48 + 4
+  fillRoundRect(4,108,120,48,10,ST7735_WHITE);
+
+  drawText(10, 36,txt_conv("+22.3C",buf,BUF_LEN),ST7735_BLACK,ST7735_WHITE,1);
+  drawText(10, 88,txt_conv("1012hPa",buf,BUF_LEN),ST7735_BLACK,ST7735_WHITE,1);
+  drawText(10,140,txt_conv("55%",buf,BUF_LEN),ST7735_BLACK,ST7735_WHITE,1);
+  TEST_DELAY5();
   TEST_DELAY5();
   fillScreen(ST7735_BLACK);
 }

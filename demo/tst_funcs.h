@@ -42,13 +42,14 @@
   #if ! defined(ENABLE_TEST9)
     #define ENABLE_TEST9
   #endif
+  #if ! defined(ENABLE_TEST9A)
+    #define ENABLE_TEST9A
+  #endif
 #endif
 
 #define TEST_DELAY1() __delay_ms(1000)
 #define TEST_DELAY2() __delay_ms(2000)
 #define TEST_DELAY5() __delay_ms(5000)
-
-void delay_s(uint8_t count);
 
 #if defined(ENABLE_TEST1)
 void Test1(void); // Hello world fonts + Colors text
@@ -79,5 +80,8 @@ void Test8(void); // shapes media buttons graphic + invert display
 #endif
 #if defined(ENABLE_TEST9)
 void Test9(void); // glyph-fonts
+#endif
+#if defined(ENABLE_TEST9A)
+void Test9A(void); // glyph-fonts (subset)
 #endif
 #endif
