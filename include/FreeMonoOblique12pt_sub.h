@@ -55,8 +55,7 @@ const GFXglyph FreeMonoOblique12pt_subGlyphs[] PROGMEM = {
 const GFXfont FreeMonoOblique12pt_sub PROGMEM = {
   (uint8_t  *)FreeMonoOblique12pt_subBitmaps,
   (GFXglyph *)FreeMonoOblique12pt_subGlyphs,
-  0x01, 0x15, 24 };
+  0x01, 0x15, 24,
+  " 0123456789.+-/%ChPa" };
 
-const char *FreeMonoOblique12pt_subChars = " 0123456789.+-/%ChPa";
-
-// Approx. 525 bytes
+// Approx. 527 bytes
