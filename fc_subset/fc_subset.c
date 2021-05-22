@@ -221,8 +221,11 @@ int main(int argc, char *argv[]) {
     printf("  0x%02X, 0x%02lX, %ld };\n\n",
            1, strlen(subset)+1, face->size->metrics.height >> 6);
   }
+
+  printf("const char *%sChars = \"%s\";\n\n",fontName,subset);
+
   printf("// Approx. %ld bytes\n",
-         bitmapOffset + (strlen(subset)) * 7 + 7);
+         bitmapOffset + (strlen(subset)) * 7 + 7 + strlen(subset));
   // Size estimate is based on AVR struct and pointer sizes;
   // actual size may vary.
 
