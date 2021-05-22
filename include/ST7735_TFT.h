@@ -198,12 +198,15 @@ typedef struct {
 
 /// Data stored for FONT AS A WHOLE
 typedef struct {
-  uint8_t *bitmap;  ///< Glyph bitmaps, concatenated
-  GFXglyph *glyph;  ///< Glyph array
-  uint16_t first;   ///< ASCII extents (first char)
-  uint16_t last;    ///< ASCII extents (last char)
-  uint8_t yAdvance; ///< Newline distance (y axis)
+  uint8_t *bitmap;     ///< Glyph bitmaps, concatenated
+  GFXglyph *glyph;     ///< Glyph array
+  uint16_t first;      ///< ASCII extents (first char)
+  uint16_t last;       ///< ASCII extents (last char)
+  uint8_t yAdvance;    ///< Newline distance (y axis)
+  const char *subset;  ///< subset of chars in the font
 } GFXfont;
+
+extern GFXfont *_gfxFont;
 void setFont(const GFXfont *f);
 #endif
 
