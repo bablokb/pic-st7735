@@ -172,14 +172,12 @@ void Test9(void) {
 
 #if defined(ENABLE_TEST9A)
 
-const char* char_subset = " 0123456789.+-/%ChPa";
-
 char *txt_conv(const char *txt, char *buf, const uint8_t n) {
   char c;
   for (int i=0;i<strlen(txt);++i) {
     c = txt[i];
-    for (int j=0;j<strlen(char_subset);++j) {
-      if (char_subset[j] == c) {
+    for (int j=0;j<strlen(FreeMonoOblique12pt_subChars);++j) {
+      if (FreeMonoOblique12pt_subChars[j] == c) {
         buf[i] = j+1;
         break;
       }
