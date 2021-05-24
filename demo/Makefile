@@ -10,8 +10,8 @@
 # --------------------------------------------------------------------------
 
 # chip-select
-PIN_SPI_CS  = 4
-PORT_SPI_CS = A
+PIN_TFT_CS  = 4
+PORT_TFT_CS = A
 
 # data/command pin
 PIN_TFT_DC   = 5
@@ -33,8 +33,8 @@ TFT_FEATURES+=-DTFT_ENABLE_BLACK -DTFT_ENABLE_TEXT -DTFT_ENABLE_SHAPES -DTFT_ENA
 TESTS+=-DENABLE_TESTR -DENABLE_TEST1 -DENABLE_TEST2 -DENABLE_TEST3 -DENABLE_TEST4
 
 SDCC_ARGS+= -D_XTAL_FREQ=4000000 \
-          -DPIN_SPI_CS=$(PIN_SPI_CS) \
-          -DPORT_SPI_CS=$(PORT_SPI_CS) \
+          -DPIN_TFT_CS=$(PIN_TFT_CS) \
+          -DPORT_TFT_CS=$(PORT_TFT_CS) \
           -DPIN_TFT_DC=$(PIN_TFT_DC) \
           -DPORT_TFT_DC=$(PORT_TFT_DC) \
           -DSPI_HOST -DSPI_NO_SDI $(TFT_RST) $(TFT_FEATURES) $(TESTS)
