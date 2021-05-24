@@ -36,7 +36,7 @@ uint8_t tft_width = 128, tft_height = 160;
 
 // Write an SPI command
 void write_command(uint8_t cmd_){
-  tft_dc_low() ;
+  tft_dc_low();
   tft_cs_low();
   spiwrite(cmd_);
   tft_cs_high();
@@ -629,7 +629,7 @@ void TFT_GreenTab_Initialize(){
 #if defined TFT_ENABLE_RESET
   TFT_ResetPIN();
 #endif
-  tft_dc_low() ;
+  tft_dc_low();
   Rcmd1();
   Rcmd2green();
   Rcmd3();
@@ -644,7 +644,7 @@ void TFT_GreenTab_Initialize(){
 void TFT_ResetPIN() {
   tft_rst_high() ;
   __delay_ms(10);
-  tft_rst_low() ;
+  tft_rst_low();
   __delay_ms(10);
   tft_rst_high() ;
   __delay_ms(10);
@@ -671,7 +671,7 @@ void TFT_BlackTab_Initialize(){
 #if defined TFT_ENABLE_RESET
   TFT_ResetPIN();
 #endif
-  tft_dc_low() ;
+  tft_dc_low();
   Rcmd1();
   Rcmd2red();
   Rcmd3();
