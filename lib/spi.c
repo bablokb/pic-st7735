@@ -24,8 +24,10 @@ void spi_init(uint8_t status, uint8_t control, uint8_t add) {
 #ifndef SPI_NO_SDI
   bitclear(ANSEL_SPI_SDI,PIN_SPI_SDI);
 #endif
-#ifdef SPI_HOST 
-  bitclear(ANSEL_SPI_CS,PIN_SPI_CS);
+#ifdef SPI_HOST
+  #ifdef PIN_SPI_CS
+    bitclear(ANSEL_SPI_CS,PIN_SPI_CS);
+  #endif
 #else
   bitclear(ANSEL_SPI_SS,PIN_SPI_SS);
 #endif
@@ -37,8 +39,10 @@ void spi_init(uint8_t status, uint8_t control, uint8_t add) {
 #endif
 #ifdef SPI_HOST
   bitclear(TRIS_SPI_CLK,PIN_SPI_CLK);     // CLK is output
-  bitclear(TRIS_SPI_CS,PIN_SPI_CS);       // CS is output
-  GP_SPI_CS = 1;                          // deselect device as default
+  #ifdef PIN_SPI_CS
+    bitclear(TRIS_SPI_CS,PIN_SPI_CS);     // CS is output
+    GP_SPI_CS = 1;                        // deselect device as default
+  #endif
 #else // not SPI_HOST
   bitset(TRIS_SPI_CLK,PIN_SPI_CLK);       // CLK is input
   bitset(TRIS_SPI_SS,PIN_SPI_SS);         // SS  is input
