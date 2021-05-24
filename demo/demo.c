@@ -38,8 +38,13 @@ static void init(void) {
   INIT_SPECIAL;
   CLOCK_4MHZ;                    // change _XTAL_FREQ in Makefile
 
+  bitclear(ANSEL_TFT_CS,PIN_TFT_CS);
+  bitclear(TRIS_TFT_CS,PIN_TFT_CS);
+  GP_TFT_CS = 1;
+
   bitclear(ANSEL_TFT_DC,PIN_TFT_DC);
   bitclear(TRIS_TFT_DC,PIN_TFT_DC);
+
   bitclear(ANSEL_TFT_RST,PIN_TFT_RST);
   bitclear(TRIS_TFT_RST,PIN_TFT_RST);
 }
